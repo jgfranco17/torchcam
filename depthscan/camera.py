@@ -1,10 +1,11 @@
 import cv2
 import torch
 import numpy as np
+import datetime as dt
 
 
 class DepthScanner(object):
-    def __init__(self, camera:int=0):
+    def __init__(self, camera:int=0, mode:str="standard"):
         # Set OpenCV video-capture parameters
         self.camera_num = camera
         self.camera = cv2.VideoCapture(self.camera_num)
@@ -18,16 +19,31 @@ class DepthScanner(object):
         self.model.eval()
         midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
         self.transform = midas_transforms.small_transform
+        modes = {
+            "standard": False,
+            "live": True
+        }
+        self.live_render = modes.get(mode, "standard")
         
     def __repr__(self) -> str:
         return f'<DepthScanner | camera={self.camera_num}, device={str(self.__device).upper()}>'
     
     @property
-    def device(self):
+    def device(self) -> str:
         return str(self.__device)
     
     @staticmethod
-    def __normalize(frame, bits:int):
+    def __normalize(frame, bits:int) -> np.ndarray:
+        """
+        Normalize the given map for OpenCV.
+
+        Args:
+            frame (np.ndarray): Frame image
+            bits (int): image bits
+
+        Returns:
+            np.ndarray: Normalized depth map
+        """
         depth_min = frame.min()
         depth_max = frame.max()
         max_val = (2 ** (8 * bits)) - 1
@@ -41,37 +57,63 @@ class DepthScanner(object):
             return out.astype("uint8")
         return out.astype("uint16")
     
-    def get_depth(self, frame):
-        input_batch = self.transform(frame).to(self.__device)
-        with torch.no_grad():
-            prediction = self.model(input_batch)
-            prediction = torch.nn.functional.interpolate(
-                prediction.unsqueeze(1),
-                size=frame.shape[:2],
-                mode="bicubic",
-                align_corners=False,
-            ).squeeze()
-        depth_frame = prediction.cpu().numpy()
-        return self.__normalize(depth_frame, bits=2)
+    def get_depth(self, frame) -> np.ndarray:
+        """
+        Apply MiDaS model to generate monocular depth estimation 
+        of an image frame.
+
+        Args:
+            frame (np.ndarray): Image frame
+
+        Returns:
+            np.ndarray: converted depth map
+        """
+        try:
+            input_batch = self.transform(frame).to(self.__device)
+            with torch.no_grad():
+                prediction = self.model(input_batch)
+                prediction = torch.nn.functional.interpolate(
+                    prediction.unsqueeze(1),
+                    size=frame.shape[:2],
+                    mode="bicubic",
+                    align_corners=False,
+                ).squeeze()
+            depth_frame = prediction.cpu().numpy()
+            return self.__normalize(depth_frame, bits=2)
+        
+        except Exception as e:
+            print(f'Failed to generate depth map: {e}')
+            return None
     
-    def capture(self, frame):
+    def capture(self, frame) -> None:
+        """
+        Capture a camera frame and render a depth map.
+
+        Args:
+            frame (np.ndarray): Camera capture frame
+        """
         depth_frame = self.get_depth(frame)
-        cv2.imshow("Depth Scan", depth_frame)
+        date_today = dt.datetime.now().strftime("%d %B %Y")
+        timestamp = dt.datetime.now().strftime("%H:%M:%S")
+        print(f'[{date_today} | {timestamp}] Frame captured!')
+        cv2.imshow(f'Depth Scan - {timestamp}', depth_frame)
     
-    def run(self, live_mapping:bool=False):
+    def run(self) -> None:
+        """
+        Run the camera.
+        """
         self.is_running = True
         print(f'[{self.device.upper()}] Running depth scan...')
         
         try:
             while self.is_running:
                 ret, frame = self.camera.read()
-                display_frame = self.get_depth(frame) if live_mapping else frame
+                display_frame = self.get_depth(frame) if self.live_render else frame
                 cv2.imshow("Standard Camera", display_frame)
 
                 key = cv2.waitKey(10)
-                if key == ord("c") and not live_mapping:
+                if key == ord("c") and not self.live_render:
                     self.capture(frame)
-                    print("Frame captured!")
                 
                 if key == 27:
                     print("Closing scanner...")
