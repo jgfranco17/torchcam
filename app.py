@@ -1,7 +1,8 @@
-from depthscan import DepthScanner
+from depthscan import config, DepthScanner
 
 
 if __name__ == "__main__":
-    scanner = DepthScanner(camera=0)
+    args = config()
+    scanner = DepthScanner(camera=args.camera)
     scanner.run()
     
