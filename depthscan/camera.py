@@ -85,6 +85,11 @@ class DepthScanner(object):
             print(f'Failed to generate depth map: {e}')
             return None
     
+    def colormap(self, image):
+        depth_map = self.get_depth(image)
+        depth_map = (depth_map/256).astype(np.uint8)
+        return cv2.applyColorMap(depth_map, cv2.COLORMAP_HOT)
+    
     def capture(self, frame) -> None:
         """
         Capture a camera frame and render a depth map.
@@ -92,11 +97,14 @@ class DepthScanner(object):
         Args:
             frame (np.ndarray): Camera capture frame
         """
-        depth_frame = self.get_depth(frame)
+        # Preprocess frame
+        colored_map = self.colormap(frame)
+        
+        # Display colored depth map
         date_today = dt.datetime.now().strftime("%d %B %Y")
         timestamp = dt.datetime.now().strftime("%H:%M:%S")
         print(f'[{date_today} | {timestamp}] Frame captured!')
-        cv2.imshow(f'Depth Scan - {timestamp}', depth_frame)
+        cv2.imshow(f'Depth Scan - {timestamp}', colored_map)
     
     def run(self) -> None:
         """
@@ -108,7 +116,7 @@ class DepthScanner(object):
         try:
             while self.is_running:
                 ret, frame = self.camera.read()
-                display_frame = self.get_depth(frame) if self.live_render else frame
+                display_frame = self.colormap(frame) if self.live_render else frame
                 cv2.imshow("Standard Camera", display_frame)
 
                 key = cv2.waitKey(10)
