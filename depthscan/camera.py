@@ -117,7 +117,8 @@ class DepthScanner(object):
             while self.is_running:
                 ret, frame = self.camera.read()
                 display_frame = self.colormap(frame) if self.live_render else frame
-                cv2.imshow("Standard Camera", display_frame)
+                window_label = "Depth Capture" if self.live_render else "Standard Camera"
+                cv2.imshow(window_label, display_frame)
 
                 key = cv2.waitKey(10)
                 if key == ord("c") and not self.live_render:
