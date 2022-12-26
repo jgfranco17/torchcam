@@ -2,6 +2,7 @@ import cv2
 import torch
 import numpy as np
 import datetime as dt
+from time import perf_counter
 
 
 class DepthScanner(object):
@@ -115,9 +116,13 @@ class DepthScanner(object):
         
         try:
             while self.is_running:
+                frame_start_time = perf_counter()
                 ret, frame = self.camera.read()
                 display_frame = self.colormap(frame) if self.live_render else frame
                 window_label = "Depth Capture" if self.live_render else "Standard Camera"
+                frame_end_time = perf_counter()
+                fps = round(1 / (frame_end_time - frame_start_time))
+                cv2.putText(display_frame, f'FPS: {fps}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (10, 255, 100), 2)
                 cv2.imshow(window_label, display_frame)
 
                 key = cv2.waitKey(10)
