@@ -15,15 +15,19 @@ class DepthScanner(object):
         modes = {
             "standard": False,
             "live": True
-        }
-        self.live_render = modes.get(mode, "standard")
+        } 
+        self.live_render = modes.get(mode, None)
+        if self.live_render is None:
+            raise ValueError(f'Unrecognized mode given: \"{mode}\"')
+        
         self.model_type = "MiDaS_small" if self.live_render else "DPT_Large"
         self.model = torch.hub.load("intel-isl/MiDaS", self.model_type)
-        self.__device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        self.__device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
         self.model.eval()
         midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
         self.transform = midas_transforms.small_transform if self.live_render else midas_transforms.dpt_transform
+        print(f'Starting up depth scanner, running {mode} mode')
         
     def __repr__(self) -> str:
         return f'<DepthScanner | camera={self.camera_num}, device={str(self.__device).upper()}>'
