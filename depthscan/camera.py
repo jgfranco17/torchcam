@@ -76,8 +76,7 @@ class DepthScanner(object):
         """
         height, width, _ = image.shape
         new_dimensions = (round(width * factor), round(height * factor))
-        return cv2.resize(image, new_dimensions, interpolation=cv2.INTER_AREA)
-        
+        return cv2.resize(image, new_dimensions, interpolation=cv2.INTER_AREA)   
     
     def get_depth(self, frame) -> np.ndarray:
         """
@@ -107,7 +106,16 @@ class DepthScanner(object):
             print(f'Failed to generate depth map: {e}')
             return None
     
-    def colormap(self, image):
+    def colormap(self, image) -> np.ndarray:
+        """
+        Recolor the depth map from grayscale to colored
+
+        Args:
+            image (np.ndarray): Grayscale image
+
+        Returns:
+            np.ndarray: Colored map image
+        """
         depth_map = self.get_depth(image)
         depth_map = (depth_map/256).astype(np.uint8)
         return cv2.applyColorMap(depth_map, cv2.COLORMAP_HOT)
