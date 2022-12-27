@@ -11,6 +11,10 @@ def config():
                         type=int, 
                         default=0, 
                         help="Webcam port to capture, default is 0")
+    parser.add_argument("--window", "-w",
+                        type=float, 
+                        default=1.0, 
+                        help="Display window scale, default is 1")
     args = parser.parse_args()
     return args
     
