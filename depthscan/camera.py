@@ -36,6 +36,9 @@ class DepthScanner(object):
     
     @property
     def device(self) -> str:
+        """
+        Returns the device used to run MiDaS model
+        """
         return str(self.__device)
     
     @staticmethod
@@ -65,11 +68,12 @@ class DepthScanner(object):
     
     @staticmethod
     def __resize(image, factor:float=1.0) -> np.ndarray:
-        """_summary_
+        """
+        Scale an image evenly by a given factor.
 
         Args:
             image (np.ndarray): Image to scale
-            factor (float, optional): Scaling factor. Defaults to 1.0.
+            factor (float, optional): Scaling factor. Defaults to 1.
 
         Returns:
             np.ndarray: _description_
