@@ -1,6 +1,6 @@
 # Monocular Depth Camera
 
-This project uses PyTorch's MiDaS model to generate live depth estimation streams using a webcam. By applying the MiDaS model to the video stream from the webcam, the software is able to generate a real-time colored depth map of the scene being captured. 
+This project uses PyTorch's MiDaS model to generate live depth estimation streams using a webcam. By applying the MiDaS model to the video stream from the webcam, the software is able to generate a real-time colored depth map of the scene being captured. Runs better if GPU is available, as the video stream can render depth maps faster.
 
 ## Requirements
 In order to use this project, you will need to have the following software and libraries installed:  
