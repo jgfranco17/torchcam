@@ -6,11 +6,12 @@ from time import perf_counter
 
 
 class DepthScanner(object):
-    def __init__(self, camera:int=0, mode:str="standard"):
+    def __init__(self, camera:int=0, mode:str="standard", scale:float=1):
         # Set OpenCV video-capture parameters
         self.camera_num = camera
         self.camera = cv2.VideoCapture(self.camera_num)
         self.is_running = False
+        self.__scale = scale
         
         # Configure PyTorch MiDaS
         modes = {
@@ -62,6 +63,22 @@ class DepthScanner(object):
             return out.astype("uint8")
         return out.astype("uint16")
     
+    @staticmethod
+    def __resize(image, factor:float=1.0) -> np.ndarray:
+        """_summary_
+
+        Args:
+            image (np.ndarray): Image to scale
+            factor (float, optional): Scaling factor. Defaults to 1.0.
+
+        Returns:
+            np.ndarray: _description_
+        """
+        height, width, _ = image.shape
+        new_dimensions = (round(width * factor), round(height * factor))
+        return cv2.resize(image, new_dimensions, interpolation=cv2.INTER_AREA)
+        
+    
     def get_depth(self, frame) -> np.ndarray:
         """
         Apply MiDaS model to generate monocular depth estimation 
@@ -71,7 +88,7 @@ class DepthScanner(object):
             frame (np.ndarray): Image frame
 
         Returns:
-            np.ndarray: converted depth map
+            np.ndarray: Converted depth map
         """
         try:
             input_batch = self.transform(frame).to(self.__device)
@@ -113,7 +130,7 @@ class DepthScanner(object):
     
     def run(self) -> None:
         """
-        Run the camera.
+        Run the video camera.
         """
         self.is_running = True
         print(f'[{self.device.upper()}] Running depth scan...')
@@ -123,17 +140,18 @@ class DepthScanner(object):
                 frame_start_time = perf_counter()
                 ret, frame = self.camera.read()
                 display_frame = self.colormap(frame) if self.live_render else frame
-                window_label = "Depth Capture" if self.live_render else "Standard Camera"
                 frame_end_time = perf_counter()
                 fps = round(1 / (frame_end_time - frame_start_time))
+                window_label = "Depth Capture" if self.live_render else "Standard Camera" 
                 cv2.putText(display_frame, f'FPS: {fps}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (10, 255, 100), 2)
-                cv2.imshow(window_label, display_frame)
+                cv2.imshow(window_label, self.__resize(display_frame, factor=self.__scale))
 
                 key = cv2.waitKey(10)
-                if key == ord("c") and not self.live_render:
+                if key == 32 and not self.live_render:
+                    # Capture frame on spacebar press
                     self.capture(frame)
-                
                 if key == 27:
+                    # Close windows when Esc is pressed
                     print("Closing scanner...")
                     self.is_running = False
                     break
