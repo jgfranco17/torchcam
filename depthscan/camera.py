@@ -119,8 +119,7 @@ class DepthScanner(object):
         Args:
             frame (np.ndarray): Camera capture frame
         """
-        # Preprocess frame
-        colored_map = self.colormap(frame)
+        colored_map = self.colormap(frame)  # Preprocess frame
         
         # Display colored depth map
         date_today = dt.datetime.now().strftime("%d %B %Y")
@@ -148,11 +147,9 @@ class DepthScanner(object):
 
                 key = cv2.waitKey(10)
                 if key == 32 and not self.live_render:
-                    # Capture frame on spacebar press
-                    self.capture(frame)
+                    self.capture(frame)  # Capture frame on spacebar press
                 if key == 27:
-                    # Close windows when Esc is pressed
-                    print("Closing scanner...")
+                    print("Closing scanner...")  # Close windows when Esc is pressed
                     self.is_running = False
                     break
                 
