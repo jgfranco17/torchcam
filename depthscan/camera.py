@@ -6,12 +6,21 @@ from time import perf_counter
 
 
 class DepthScanner(object):
-    def __init__(self, camera:int=0, mode:str="standard", scale:float=1):
+    def __init__(self, camera:int=0, mode:str="standard", scale:float=1, color:str="hot"):
         # Set OpenCV video-capture parameters
         self.camera_num = camera
         self.camera = cv2.VideoCapture(self.camera_num)
         self.is_running = False
         self.__scale = scale
+        map_style = {
+            "autumn": cv2.COLORMAP_AUTUMN,
+            "rainbow": cv2.COLORMAP_RAINBOW,
+            "bone": cv2.COLORMAP_BONE,
+            "hsv": cv2.COLORMAP_HSV,
+            "ocean": cv2.COLORMAP_OCEAN,
+            "hot": cv2.COLORMAP_HOT
+        }
+        self.map_color = map_style.get(color, cv2.COLORMAP_HOT)
         
         # Configure PyTorch MiDaS
         modes = {
@@ -122,7 +131,7 @@ class DepthScanner(object):
         """
         depth_map = self.get_depth(image)
         depth_map = (depth_map/256).astype(np.uint8)
-        return cv2.applyColorMap(depth_map, cv2.COLORMAP_HOT)
+        return cv2.applyColorMap(depth_map, self.map_color)
     
     def capture(self, frame) -> None:
         """
