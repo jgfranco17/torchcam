@@ -15,6 +15,10 @@ def config():
                         type=float, 
                         default=1.0, 
                         help="Display window scale, default is 1")
+    parser.add_argument("--style", "-s",
+                        type=str, 
+                        default="hot", 
+                        help="Colormap styling")
     args = parser.parse_args()
     return args
     
