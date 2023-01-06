@@ -85,7 +85,7 @@ class DepthScanner(object):
             factor (float, optional): Scaling factor. Defaults to 1.
 
         Returns:
-            np.ndarray: _description_
+            np.ndarray: Rescaled image 
         """
         height, width, _ = image.shape
         new_dimensions = (round(width * factor), round(height * factor))
