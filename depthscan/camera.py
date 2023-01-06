@@ -20,7 +20,9 @@ class DepthScanner(object):
             "ocean": cv2.COLORMAP_OCEAN,
             "hot": cv2.COLORMAP_HOT
         }
-        self.map_color = map_style.get(color, cv2.COLORMAP_HOT)
+        if color.lower() not in map_style.keys():
+            raise ValueError(f'Invalid colormap color \"{color}\" provided.')        
+        self.map_color = map_style.get(color.lower())
         
         # Configure PyTorch MiDaS
         modes = {
