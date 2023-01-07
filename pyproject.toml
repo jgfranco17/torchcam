@@ -1,3 +1,23 @@
 [build-system]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools", "wheel"]
+
+[project]
+name = "depth-camera"
+version = "1.0.0"
+authors = [
+    {name = "Chino Franco", email = "chino.franco@gmail.com"},
+]
+description = "A real-time colored depth map of the webcam video stream generated using PyTorch's MiDaS model"
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/jgfranco17/depth-camera"
+requires-python = ">=3.8"
+
+classifiers = [
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Image Processing"
+]
