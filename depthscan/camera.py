@@ -18,6 +18,7 @@ class DepthScanner(object):
             "bone": cv2.COLORMAP_BONE,
             "hsv": cv2.COLORMAP_HSV,
             "ocean": cv2.COLORMAP_OCEAN,
+            "deepgreen": cv2.COLORMAP_DEEPGREEN,
             "hot": cv2.COLORMAP_HOT
         }
         if color.lower() not in map_style.keys():
