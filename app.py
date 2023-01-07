@@ -1,4 +1,4 @@
-from depthscan import config, DepthScanner
+from src.depthscan import config, DepthScanner
 
 
 if __name__ == "__main__":
