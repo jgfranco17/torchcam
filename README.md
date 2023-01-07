@@ -8,6 +8,19 @@ In order to use this project, you will need to have the following software and l
 - OpenCV
 - NumPy
 
+## Project Structure
+```
+/depth-camera/
+├── src/                            Source dir.
+│   └── depthscan/                  Python package directory.
+│       ├── __init__.py             Makes the directory a package.
+│       ├── cli.py                  Adds CLI implementation.
+│       └── camera.py               Camera model module.
+├── pyproject.toml                  Definition of package build process.
+├── README.md                       Project overview and outline.
+└── setup.cfg                       Setup configuration of the Python package.
+```
+
 ## Setup
 
 To get started with this project, clone the repository to your local machine and install the required dependencies.
