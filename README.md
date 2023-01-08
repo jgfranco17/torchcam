@@ -1,4 +1,4 @@
-<h1 align="center">Project Title</h1>
+<h1 align="center">Monocular Depth Camera</h1>
 
 <div align="center">
 
