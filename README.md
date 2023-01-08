@@ -75,7 +75,7 @@ mode:
 - `live` - Displays live depth map render, lower frame rate due to conversion per frame
 
 ## ⛏️ Built Using <a name = "built_using"></a>
-![OpenCV](https://img.shields.io/badge/PyTorch-1.13.0-orange?style=for-the-badge&logo=pytorch) ![OpenCV](https://img.shields.io/badge/OpenCV-4.6.0-orange?style=for-the-badge&logo=opencv) ![NumPy](https://img.shields.io/badge/numpy-1.23.4-orange?style=for-the-badge&logo=numpy)
+![OpenCV](https://img.shields.io/badge/PyTorch-1.13.0-orange?style=for-the-badge&logo=pytorch&logoColor=orange) ![OpenCV](https://img.shields.io/badge/OpenCV-4.6.0-orange?style=for-the-badge&logo=opencv&logoColor=orange) ![NumPy](https://img.shields.io/badge/numpy-1.23.4-orange?style=for-the-badge&logo=numpy&logoColor=orange)
 
 ## ✍️ Authors <a name = "authors"></a>
 
