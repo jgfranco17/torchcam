@@ -11,7 +11,6 @@ authors = [
 description = "A real-time colored depth map of the webcam video stream generated using PyTorch's MiDaS model"
 readme = "README.md"
 license = "MIT"
-repository = "https://github.com/jgfranco17/depth-camera"
 requires-python = ">=3.8"
 
 classifiers = [
@@ -21,3 +20,6 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Scientific/Engineering :: Image Processing"
 ]
+
+[project.urls]
+repository = "https://github.com/jgfranco17/depth-camera"
