@@ -7,6 +7,8 @@
 
 </div>
 
+---
+
 ## 📝 Table of Contents
 
 * [About](#about)
@@ -35,7 +37,7 @@ This project uses PyTorch's [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -73,7 +75,7 @@ mode:
 - `live` - Displays live depth map render, lower frame rate due to conversion per frame
 
 ## ⛏️ Built Using <a name = "built_using"></a>
-![OpenCV](https://img.shields.io/badge/PyTorch-1.13.0-green?style=for-the-badge&logo=pytorch) ![OpenCV](https://img.shields.io/badge/OpenCV-4.6.0-green?style=for-the-badge&logo=opencv) ![NumPy](https://img.shields.io/badge/numpy-1.23.4-green?style=for-the-badge&logo=numpy)
+![OpenCV](https://img.shields.io/badge/PyTorch-1.13.0-orange?style=for-the-badge&logo=pytorch) ![OpenCV](https://img.shields.io/badge/OpenCV-4.6.0-orange?style=for-the-badge&logo=opencv) ![NumPy](https://img.shields.io/badge/numpy-1.23.4-orange?style=for-the-badge&logo=numpy)
 
 ## ✍️ Authors <a name = "authors"></a>
 
