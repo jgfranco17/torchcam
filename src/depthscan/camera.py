@@ -53,6 +53,17 @@ class DepthScanner(object):
         """
         return str(self.__device)
     
+    @property
+    def scale(self) -> float:
+        """
+        Returns the scale factor of the window display.
+        """
+        return self.__scale
+    
+    @scale.setter
+    def set_scale(self, new_scale_factor:float) -> None:
+        self.__scale = new_scale_factor
+    
     @staticmethod
     def __normalize(frame, bits:int) -> np.ndarray:
         """
