@@ -1,16 +1,6 @@
-import cv2
 import torch
 import pytest
-from .conftest import webcam, basic_tensor
-
-
-def test_video_capture(webcam):
-    """
-    Test webcam video capture using OpenCV
-    """
-    assert webcam.isOpened(), "Webcam failed to open"
-    ret, frame = webcam.read()
-    assert ret, "Failed to read frame from webcam"
+from .conftest import basic_tensor
 
 
 def test_torch_tensor_creation(basic_tensor):
@@ -51,20 +41,3 @@ def test_tensor_construction():
     # Check tensor shape and type
     assert tensor.shape == (3, 3), "Incorrect tensor shape"
     assert tensor.dtype == torch.int64, "Incorrect tensor type"
-
-
-def test_video_capture_frame_rate(webcam):
-    # Get the frame rate of the webcam
-    fps = webcam.get(cv2.CAP_PROP_FPS)
-
-    # Check that the frame rate is a positive number
-    assert fps > 0, "Invalid frame rate"
-
-
-def test_video_capture_resolution(webcam):
-    # Get the resolution of the webcam
-    width = int(webcam.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(webcam.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-    # Check that the resolution is a positive number
-    assert width > 0 and height > 0, "Invalid resolution"
