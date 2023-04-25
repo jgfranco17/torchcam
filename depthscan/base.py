@@ -45,6 +45,13 @@ class DepthEstimator:
         self.model.eval()
         midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
         self.transform = midas_transforms.small_transform if self.live_render else midas_transforms.dpt_transform
+
+    @property
+    def device(self) -> str:
+        """
+        Returns the device used to run MiDaS model
+        """
+        return str(self.__device)
     
     @staticmethod
     def __normalize(frame, bits:int) -> np.ndarray:
