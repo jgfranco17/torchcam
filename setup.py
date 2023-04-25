@@ -7,11 +7,8 @@ from setuptools import find_packages, setup
 
 
 def read(*paths, **kwargs):
-    """Read the contents of a text file safely.
-    >>> read("project_template", "VERSION")
-    '0.1.0'
-    >>> read("README.md")
-    ...
+    """
+    Read the contents of a text file safely.
     """
 
     content = ""
@@ -39,10 +36,17 @@ setup(
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     author="jgfranco17",
+    classifiers = [
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Topic :: Scientific/Engineering :: Image Processing"
+    ],
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
     entry_points={
-        "console_scripts": ["depth-camera = depthcam.__main__:main"]
+        "console_scripts": ["depth-camera = depthscan.__main__:main"]
     },
     extras_require={"test": read_requirements("requirements-test.txt")},
 )
