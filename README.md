@@ -26,8 +26,8 @@ This project uses PyTorch's [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) 
 ```text
 jgfranco17/depth-camera/
 ├── .github/                            Github Actions suite
-│   │   └── workflows                   GA workflows
-│   │       └── python-test.yml         Test installation on different Python versions
+│   │   ├── workflows                   GA workflows
+│   │   │   └── python-test.yml         Test installation on different Python versions
 │   │   └── ISSUE_TEMPLATES             Templates for requests/reports
 │   │       ├── bug_report.md           Reporting a bug          
 │   │       └── feature_request.md      Request implementation of a new feature
