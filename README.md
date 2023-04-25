@@ -2,8 +2,7 @@
 
 <div align="center">
 
-![Status](https://img.shields.io/badge/status-active-success.svg)
-![License](https://img.shields.io/github/license/jgfranco17/depth-camera?color=blue)
+![STATUS](https://img.shields.io/badge/status-active-brightgreen?style=for-the-badge) ![LICENSE](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
 
 </div>
 
