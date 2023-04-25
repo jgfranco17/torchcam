@@ -26,7 +26,7 @@ This project uses PyTorch's [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) 
 ```text
 jgfranco17/depth-camera/
 ├── .github/                            Github Actions suite
-│   │   └── workflows                   Makes the directory a test module
+│   │   └── workflows                   GA workflows
 │   │       └── python-test.yml         Test installation on different Python versions           
 │   ├── conftest.py                     Fixtures for reusability in testing
 │   └── test_main.py                    Primary unittests
