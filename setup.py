@@ -34,7 +34,7 @@ def read_requirements(path):
 setup(
     name="depth-camera",
     version=read("depthscan", "VERSION"),
-    description="Python-based file converter, embeds binary data into image format.",
+    description="Apply PyTorch MiDaS depth estimation on webcam feed.",
     url="https://github.com/jgfranco17/depth-camera",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
