@@ -8,7 +8,7 @@ Be creative! do whatever you want!
 - Import things from your .base module
 """
 import argparse
-from .camera import DepthScanner
+from .camera import DepthCamera
 
 
 def _config():    
@@ -36,19 +36,8 @@ def _config():
 def main():  # pragma: no cover
     """
     The main function executes on commands:
-    `python -m project_template` and `$ project_template `.
-
-    This is your program's entry point.
-
-    You can change this function to do whatever you want.
-    Examples:
-        * Run a test suite
-        * Run a server
-        * Do some other stuff
-        * Run a command line application (Click, Typer, ArgParse)
-        * List all available tasks
-        * Run an application (Flask, FastAPI, Django, etc.)
+    `python -m depth-camera` and `$ depth-camera `.
     """
     args = _config()
-    scanner = DepthScanner(camera=args.camera, mode="live", scale=args.scale, color=args.color)
+    scanner = DepthCamera(camera=args.camera, mode="live", scale=args.window, color=args.style)
     scanner.run()
