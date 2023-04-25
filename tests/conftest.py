@@ -1,14 +1,17 @@
-import sys
+import cv2
+import torch
 import pytest
 
 
-# each test runs on cwd to its temp dir
-@pytest.fixture(autouse=True)
-def go_to_tmpdir(request):
-    # Get the fixture dynamically by its name.
-    tmpdir = request.getfixturevalue("tmpdir")
-    # ensure local test created packages can be imported
-    sys.path.insert(0, str(tmpdir))
-    # Chdir only for the duration of the test.
-    with tmpdir.as_cwd():
-        yield
+@pytest.fixture(scope="module")
+def webcam():
+    cap = cv2.VideoCapture(0)
+    yield cap
+    cap.release()
+
+
+@pytest.fixture(scope="module")
+def basic_tensor():
+    # Create a PyTorch tensor with random values
+    tensor = torch.randn((3, 224, 224))
+    yield tensor
