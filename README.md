@@ -23,16 +23,33 @@ This project uses PyTorch's [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) 
 
 ## 🔧 Project Structure <a name = "structure"></a>
 
-```
-/depth-camera/
-├── src/                            Source dir.
-│   └── depthscan/                  Python package directory.
-│       ├── __init__.py             Makes the directory a package.
-│       ├── cli.py                  Adds CLI implementation.
-│       └── camera.py               Camera model module.
-├── pyproject.toml                  Definition of package build process.
-├── README.md                       Project overview and outline.
-└── setup.cfg                       Setup configuration of the Python package.
+```text
+jgfranco17/depth-camera/
+├── .github/                            Github Actions suite
+│   │   └── workflows                   Makes the directory a test module
+│   │       └── python-test.yml         Test installation on different Python versions           
+│   ├── conftest.py                     Fixtures for reusability in testing
+│   └── test_main.py                    Primary unittests
+├── depthscan/                          Python package directory
+│   ├── __init__.py                     Makes the directory a package
+│   ├── __main__.py                     Entrypoint for CLI tools
+│   ├── base.py                         Architecture for estimator
+│   ├── camera.py                       Camera model module
+│   ├── cli.py                          Adds CLI implementation
+│   └── VERSION                         Project version
+├── tests/                              PyTest suite
+│   ├── __init__.py                     Makes the directory a test module
+│   ├── conftest.py                     Fixtures for reusability in testing
+│   └── test_main.py                    Primary unittests
+├── .gitignore                          List of files to be ignored for Git 
+├── LICENSE                             Project license
+├── Makefile                            Build scripts for setup and usage
+├── pyproject.toml                      Definition of package build process
+├── README.md                           Project overview and outline
+├── requirements.txt                    Python library dependencies
+├── requirements-test.txt               Testing and linting dependencies for development
+├── setup.cfg                           Setup configuration of the Python package
+└── setup.py                            Build project with setuptools
 ```
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
