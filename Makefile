@@ -19,9 +19,9 @@ setup:  ## Execute installation.
 	@echo "Project setup complete!"
 	
 .PHONY: run
-run:  ## Launch API.
+run:  ## Launch app.
 	@echo "Running main app..."
-	@python3 app.py --port $(PORT)
+	@python3 app.py --camera 0 --mode live --style hot
 
 .PHONY: test
 test:  ## Run PyTest unit tests.
@@ -30,10 +30,10 @@ test:  ## Run PyTest unit tests.
 
 .PHONY: lint
 lint:  ## Run pep8, black, mypy linters.
-	$(ENV_PREFIX)pylint webserver/
-	$(ENV_PREFIX)flake8 webserver/
-	$(ENV_PREFIX)black -l 80 --check webserver/
-	$(ENV_PREFIX)mypy --ignore-missing-imports webserver/
+	$(ENV_PREFIX)pylint depthscan/
+	$(ENV_PREFIX)flake8 depthscan/
+	$(ENV_PREFIX)black -l 80 --check depthscan/
+	$(ENV_PREFIX)mypy --ignore-missing-imports depthscan/
 
 .PHONY: show
 show:  ## Show the current environment.
