@@ -1,5 +1,4 @@
 import cv2
-import torch
 import numpy as np
 import datetime as dt
 from time import perf_counter
@@ -18,14 +17,7 @@ class DepthCamera(object):
         print(f'Starting up depth scanner, running {mode} mode')
         
     def __repr__(self) -> str:
-        return f'<DepthCamera | camera={self.camera_num}, device={str(self.__device).upper()}>'
-    
-    @property
-    def device(self) -> str:
-        """
-        Returns the device used to run MiDaS model
-        """
-        return str(self.__device)
+        return f'<DepthCamera | camera={self.camera_num}, device={str(self.estimator.device).upper()}>'
     
     @property
     def scale(self) -> float:
@@ -74,21 +66,21 @@ class DepthCamera(object):
         Run the video camera.
         """
         self.is_running = True
-        print(f'[{self.device.upper()}] Running depth scan...')
+        print(f'[{self.estimator.device.upper()}] Running depth scan...')
         
         try:
             while self.is_running:
                 frame_start_time = perf_counter()
                 ret, frame = self.camera.read()
-                display_frame = self.estimator.colormap(frame) if self.live_render else frame
+                display_frame = self.estimator.colormap(frame) if self.estimator.live_render else frame
                 frame_end_time = perf_counter()
                 fps = round(1 / (frame_end_time - frame_start_time))
-                window_label = "Depth Capture" if self.live_render else "Standard Camera" 
+                window_label = "Depth Capture" if self.estimator.live_render else "Standard Camera" 
                 cv2.putText(display_frame, f'FPS: {fps}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (10, 255, 100), 2)
                 cv2.imshow(window_label, self.__resize(display_frame, factor=self.scale))
 
                 key = cv2.waitKey(10)
-                if key == 32 and not self.live_render:
+                if key == 32 and not self.estimator.live_render:
                     self.capture(frame)  # Capture frame on spacebar press
                 if key == 27:
                     print("Closing scanner...")  # Close windows when Esc is pressed
