@@ -41,6 +41,7 @@ jgfranco17/depth-camera/
 │   ├── __init__.py                     Makes the directory a test module
 │   ├── conftest.py                     Fixtures for reusability in testing
 │   └── test_main.py                    Primary unittests
+├── app.py                              Base runnable script
 ├── .gitignore                          List of files to be ignored for Git 
 ├── LICENSE                             Project license
 ├── Makefile                            Build scripts for setup and usage
@@ -48,7 +49,6 @@ jgfranco17/depth-camera/
 ├── README.md                           Project overview and outline
 ├── requirements.txt                    Python library dependencies
 ├── requirements-test.txt               Testing and linting dependencies for development
-├── setup.cfg                           Setup configuration of the Python package
 └── setup.py                            Build project with setuptools
 ```
 
