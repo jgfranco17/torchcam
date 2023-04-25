@@ -1,4 +1,4 @@
-from project_template.base import NAME
+from depthscan.base import NAME
 
 
 def test_base():
