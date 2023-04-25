@@ -1,6 +1,7 @@
 import cv2
 import torch
 import pytest
+from .conftest import webcam, basic_tensor
 
 
 def test_video_capture(webcam):
