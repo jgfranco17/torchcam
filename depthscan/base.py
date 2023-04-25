@@ -5,7 +5,8 @@ import numpy as np
 
 class DepthEstimator:
     def __init__(self, mode:str="standard", color:str="hot") -> None:
-        """_summary_
+        """
+        Main camera architecture.
 
         Args:
             mode (str, optional): Set camera to 'live' or 'standard'
@@ -52,7 +53,7 @@ class DepthEstimator:
         Returns the device used to run MiDaS model
         """
         return str(self.__device)
-    
+
     @staticmethod
     def __normalize(frame, bits:int) -> np.ndarray:
         """
@@ -77,7 +78,7 @@ class DepthEstimator:
         if bits == 1:
             return out.astype("uint8")
         return out.astype("uint16") 
-    
+
     def get_depth(self, frame) -> np.ndarray:
         """
         Apply MiDaS model to generate monocular depth estimation 
@@ -105,7 +106,7 @@ class DepthEstimator:
         except Exception as e:
             print(f'Failed to generate depth map: {e}')
             return None
-    
+
     def colormap(self, image) -> np.ndarray:
         """
         Recolor the depth map from grayscale to colored

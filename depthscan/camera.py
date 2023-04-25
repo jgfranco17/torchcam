@@ -13,19 +13,19 @@ class DepthCamera(object):
         self.is_running = False
         self.__scale = scale
         self.estimator = DepthEstimator(mode=mode, color=color)
-        
+
         print(f'Starting up depth scanner, running {mode} mode')
-        
+
     def __repr__(self) -> str:
         return f'<DepthCamera | camera={self.camera_num}, device={str(self.estimator.device).upper()}>'
-    
+
     @property
     def scale(self) -> float:
         """
         Returns the scale factor of the window display.
         """
         return self.__scale
-    
+
     @scale.setter
     def set_scale(self, new_scale_factor:float) -> None:
         self.__scale = new_scale_factor
@@ -45,7 +45,7 @@ class DepthCamera(object):
         height, width, _ = image.shape
         new_dimensions = (round(width * factor), round(height * factor))
         return cv2.resize(image, new_dimensions, interpolation=cv2.INTER_AREA)  
-    
+
     def capture(self, frame) -> None:
         """
         Capture a camera frame and render a depth map.
@@ -54,13 +54,13 @@ class DepthCamera(object):
             frame (np.ndarray): Camera capture frame
         """
         colored_map = self.estimator.colormap(frame)  # Preprocess frame
-        
+
         # Display colored depth map
         date_today = dt.datetime.now().strftime("%d %B %Y")
         timestamp = dt.datetime.now().strftime("%H:%M:%S")
         print(f'[{date_today} | {timestamp}] Frame captured!')
         cv2.imshow(f'Depth Scan - {timestamp}', colored_map)
-    
+
     def run(self) -> None:
         """
         Run the video camera.
@@ -86,13 +86,12 @@ class DepthCamera(object):
                     print("Closing scanner...")  # Close windows when Esc is pressed
                     self.is_running = False
                     break
-                
+
         except Exception as e:
             print(f'Error during camera streaming: {e}')
-            
+
         finally:
             self.camera.release()
             cv2.destroyAllWindows()
-            
+
         print("Scanner closed!")
-        
