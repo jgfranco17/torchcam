@@ -32,8 +32,8 @@ def read_requirements(path):
 
 
 setup(
-    name="pyxelbyte",
-    version=read("pyxelbyte", "VERSION"),
+    name="depth-camera",
+    version=read("depthscan", "VERSION"),
     description="Python-based file converter, embeds binary data into image format.",
     url="https://github.com/jgfranco17/depth-camera",
     long_description=read("README.md"),
