@@ -19,11 +19,8 @@ def test_tensor_multiplication():
     """
     tensor1 = torch.randn((3, 224, 224))
     tensor2 = torch.randn((3, 224, 224))
-
-    # Multiply tensors element-wise
     tensor_product = tensor1 * tensor2
 
-    # Check tensor shape and type
     assert tensor_product.shape == (3, 224, 224), "Incorrect tensor shape"
     assert tensor_product.dtype == torch.float32, "Incorrect tensor type"
 
@@ -38,6 +35,5 @@ def test_tensor_construction():
         [7, 8, 9]
     ])
 
-    # Check tensor shape and type
     assert tensor.shape == (3, 3), "Incorrect tensor shape"
     assert tensor.dtype == torch.int64, "Incorrect tensor type"
