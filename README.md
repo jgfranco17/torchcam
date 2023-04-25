@@ -65,7 +65,7 @@ In order to use this project, you will need to have the following software and l
 
 ### Installing
 
-To get started with this project, clone the repository to your local machine and install the required dependencies.
+To get started with this project for development purposes, clone the repository to your local machine and install the required dependencies.
 
 ```bash
 git clone https://github.com/jgfranco17/depth-camera.git
@@ -90,6 +90,19 @@ camera: webcam number, `0` refers to the default webcam of the computer
 mode:  
 - `standard` - Displays plain camera view, press `c` key to capture and convert to depth map
 - `live` - Displays live depth map render, lower frame rate due to conversion per frame
+
+### Running as CLI tool
+
+To run as an installed CLI tool, use the pip manager to install via setuptools.
+
+```bash
+cd depth-camera
+pip install .
+```
+
+From there, the tool can be used similarly to above, only this time the `python3 app.py` can be replaced with `depth-camera`.
+
+A PyPi implementation is in the works, and instructions to install via official channels will be posted here when available.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 ![OpenCV](https://img.shields.io/badge/PyTorch-1.13.0-orange?style=for-the-badge&logo=pytorch&logoColor=orange) ![OpenCV](https://img.shields.io/badge/OpenCV-4.6.0-orange?style=for-the-badge&logo=opencv&logoColor=orange) ![NumPy](https://img.shields.io/badge/numpy-1.23.4-orange?style=for-the-badge&logo=numpy&logoColor=orange)
