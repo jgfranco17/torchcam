@@ -1,5 +1,5 @@
 import argparse
-from depthscan.camera import DepthScanner
+from depthscan.camera import DepthCamera
 
 
 def config():    
@@ -26,6 +26,6 @@ def config():
 
 if __name__ == "__main__":
     args = config()
-    scanner = DepthScanner(camera=args.camera, mode=args.mode, scale=args.window, color=args.style)
+    scanner = DepthCamera(camera=args.camera, mode=args.mode, scale=args.window, color=args.style)
     scanner.run()
     
