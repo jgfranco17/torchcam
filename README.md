@@ -27,9 +27,10 @@ This project uses PyTorch's [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) 
 jgfranco17/depth-camera/
 ├── .github/                            Github Actions suite
 │   │   └── workflows                   GA workflows
-│   │       └── python-test.yml         Test installation on different Python versions           
-│   ├── conftest.py                     Fixtures for reusability in testing
-│   └── test_main.py                    Primary unittests
+│   │       └── python-test.yml         Test installation on different Python versions
+│   │   └── ISSUE_TEMPLATES             Templates for requests/reports
+│   │       ├── bug_report.md           Reporting a bug          
+│   │       └── feature_request.md      Request implementation of a new feature
 ├── depthscan/                          Python package directory
 │   ├── __init__.py                     Makes the directory a package
 │   ├── __main__.py                     Entrypoint for CLI tools
@@ -44,7 +45,7 @@ jgfranco17/depth-camera/
 ├── .gitignore                          List of files to be ignored for Git 
 ├── LICENSE                             Project license
 ├── Makefile                            Build scripts for setup and usage
-├── pyproject.toml                      Definition of package build process
+├── pyproject.toml                      Definition of package build process using TOML
 ├── README.md                           Project overview and outline
 ├── requirements.txt                    Python library dependencies
 ├── requirements-test.txt               Testing and linting dependencies for development
