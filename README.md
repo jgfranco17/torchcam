@@ -41,6 +41,7 @@ jgfranco17/depth-camera/
 │   ├── __init__.py                     Makes the directory a test module
 │   ├── conftest.py                     Fixtures for reusability in testing
 │   ├── test_cv.py                      Unittests for OpenCV
+│   ├── test_package.py                 Unittests for the package scripts
 │   └── test_torch.py                   Unittests for PyTorch
 ├── app.py                              Base runnable script
 ├── .gitignore                          List of files to be ignored for Git 
