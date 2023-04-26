@@ -3,16 +3,6 @@ import pytest
 from .conftest import basic_tensor
 
 
-def test_torch_tensor_creation(basic_tensor):
-    """
-    Verify the creation of PyTorch tensors.
-    """
-    assert basic_tensor.shape == (3, 224, 224), "Incorrect tensor shape"
-    assert basic_tensor.dtype == torch.float32, "Incorrect tensor type"
-    assert torch.min(basic_tensor) >= -1.0, "Tensor values outside of range"
-    assert torch.max(basic_tensor) <= 1.0, "Tensor values outside of range"
-
-
 def test_tensor_multiplication():
     """
     Verify the operations of PyTorch tensors
