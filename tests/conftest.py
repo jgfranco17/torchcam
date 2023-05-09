@@ -1,8 +1,8 @@
 import cv2
 import torch
 import pytest
-from depthscan.base import DepthEstimator
-from depthscan.camera import DepthCamera
+from src.depthscan.base import DepthEstimator
+from src.depthscan.camera import DepthCamera
 
 
 @pytest.fixture(scope="module")
