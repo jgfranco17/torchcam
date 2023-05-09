@@ -8,7 +8,7 @@ Be creative! do whatever you want!
 - Import things from your .base module
 """
 import argparse
-from .camera import DepthCamera
+from depthscan.camera import DepthCamera
 
 
 def _config():
