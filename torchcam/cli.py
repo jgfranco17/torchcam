@@ -1,18 +1,27 @@
-"""CLI interface for project_template project.
-
-Be creative! do whatever you want!
-
-- Install click or typer and create a CLI app
-- Use builtin argparse
-- Start a web application
-- Import things from your .base module
 """
+CLI base for TorchCam project.
+"""
+import io
+import os
 import argparse
-from depthscan.camera import DepthCamera
+from torchcam.camera import DepthCamera
 
 
-def _config():
-    parser = argparse.ArgumentParser()
+def read(*paths, **kwargs):
+    """
+    Read the contents of a text file safely.
+    """
+    content = ""
+    with io.open(
+        os.path.join(os.path.dirname(__file__), *paths),
+        encoding=kwargs.get("encoding", "utf8"),
+    ) as open_file:
+        content = open_file.read().strip()
+    return content
+
+
+def config():
+    parser = argparse.ArgumentParser("TORCHCAM")
     parser.add_argument("mode",
                         type=str,
                         help="Set to \'live\' for live depth-capture, or \'standard\' otherwise")
@@ -32,11 +41,11 @@ def _config():
     return args
 
 
-def main():  # pragma: no cover
+def main():
     """
     The main function executes on commands:
     `python -m depth-camera` and `$ depth-camera `.
     """
-    args = _config()
+    args = config()
     scanner = DepthCamera(camera=args.camera, mode=args.mode, scale=args.window, color=args.style)
     scanner.run()
