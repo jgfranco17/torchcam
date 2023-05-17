@@ -1,5 +1,5 @@
 """
-Python setup.py for PyxelByte package
+Python setup.py for depth-camera package
 """
 import io
 import os
