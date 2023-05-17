@@ -13,9 +13,8 @@ from depthscan.camera import DepthCamera
 
 def _config():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", "-m",
+    parser.add_argument("mode",
                         type=str,
-                        default="standard",
                         help="Set to \'live\' for live depth-capture, or \'standard\' otherwise")
     parser.add_argument("--camera", "-c",
                         type=int,
@@ -39,5 +38,5 @@ def main():  # pragma: no cover
     `python -m depth-camera` and `$ depth-camera `.
     """
     args = _config()
-    scanner = DepthCamera(camera=args.camera, mode="live", scale=args.window, color=args.style)
+    scanner = DepthCamera(camera=args.camera, mode=args.mode, scale=args.window, color=args.style)
     scanner.run()
