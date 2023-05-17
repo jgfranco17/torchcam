@@ -29,8 +29,8 @@ def read_requirements(path):
 
 
 setup(
-    name="depth-camera",
-    version=read("depthscan", "VERSION"),
+    name="torchcam",
+    version=read("torchcam", "VERSION"),
     description="Apply PyTorch MiDaS depth estimation on webcam feed.",
     url="https://github.com/jgfranco17/depth-camera",
     long_description=read("README.md"),
@@ -46,7 +46,7 @@ setup(
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
     entry_points={
-        "console_scripts": ["depth-camera = depthscan.__main__:main"]
+        "console_scripts": ["torchcam = torchcam.__main__:main"]
     },
     extras_require={"test": read_requirements("requirements-test.txt")},
 )
