@@ -4,9 +4,8 @@ from depthscan.camera import DepthCamera
 
 def config():    
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", "-m",
-                        type=str,  
-                        default="standard", 
+    parser.add_argument("mode",
+                        type=str,
                         help="Set to \'live\' for live depth-capture, or \'standard\' otherwise")
     parser.add_argument("--camera", "-c",
                         type=int, 
