@@ -30,10 +30,10 @@ test:  ## Run PyTest unit tests.
 
 .PHONY: lint
 lint:  ## Run pep8, black, mypy linters.
-	$(ENV_PREFIX)pylint depthscan/
-	$(ENV_PREFIX)flake8 depthscan/
-	$(ENV_PREFIX)black -l 80 --check depthscan/
-	$(ENV_PREFIX)mypy --ignore-missing-imports depthscan/
+	$(ENV_PREFIX)pylint torchcam/
+	$(ENV_PREFIX)flake8 torchcam/
+	$(ENV_PREFIX)black -l 80 --check torchcam/
+	$(ENV_PREFIX)mypy --ignore-missing-imports torchcam/
 
 .PHONY: show
 show:  ## Show the current environment.
