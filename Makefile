@@ -21,7 +21,7 @@ setup:  ## Execute installation.
 .PHONY: run
 run:  ## Launch app.
 	@echo "Running main app..."
-	@python3 app.py --camera 0 --mode live --style hot
+	@python3 app.py live --camera 0 --style hot
 
 .PHONY: test
 test:  ## Run PyTest unit tests.
