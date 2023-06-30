@@ -22,7 +22,7 @@ def read(*paths, **kwargs):
 
 def config():
     parser = argparse.ArgumentParser(
-        prog="TORCHCAM",
+        prog="torchcam",
         description="Applying PyTorch MiDaS model on live webcam capture."
     )
     parser.add_argument("mode",
