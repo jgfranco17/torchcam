@@ -21,7 +21,10 @@ def read(*paths, **kwargs):
 
 
 def config():
-    parser = argparse.ArgumentParser("TORCHCAM")
+    parser = argparse.ArgumentParser(
+        prog="TORCHCAM",
+        description="Applying PyTorch MiDaS model on live webcam capture."
+    )
     parser.add_argument("mode",
                         type=str,
                         help="Set to \'live\' for live depth-capture, or \'standard\' otherwise")
@@ -36,7 +39,7 @@ def config():
     parser.add_argument("--style", "-s",
                         type=str,
                         default="hot",
-                        help="Colormap styling")
+                        help="Colormap styling, default is \'hot\'")
     args = parser.parse_args()
     return args
 
@@ -44,7 +47,7 @@ def config():
 def main():
     """
     The main function executes on commands:
-    `python -m depth-camera` and `$ depth-camera `.
+    `python -m torchcam` and `$ torchcam`.
     """
     args = config()
     scanner = DepthCamera(camera=args.camera, mode=args.mode, scale=args.window, color=args.style)
