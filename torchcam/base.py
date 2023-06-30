@@ -44,7 +44,7 @@ class DepthEstimator:
         self.model_type = "MiDaS_small" if self.live_render else "DPT_Large"
         self.model = torch.hub.load("intel-isl/MiDaS", self.model_type)
         self.__device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(self.device)
+        self.model.to(self.device.lower())
         self.model.eval()
         midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
         self.transform = midas_transforms.small_transform if self.live_render else midas_transforms.dpt_transform
