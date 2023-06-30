@@ -2,11 +2,12 @@ import cv2
 import numpy as np
 import datetime as dt
 from time import perf_counter
+from typing import Optional
 from .base import DepthEstimator
 
 
 class DepthCamera(object):
-    def __init__(self, camera:int=0, mode:str="standard", scale:float=1, color:str="hot"):
+    def __init__(self, camera: Optional[int] = 0, mode: Optional[str] = "standard", scale: Optional[float] = 1.0, color: Optional[str] = "hot"):
         # Set OpenCV video-capture parameters
         self.camera_num = camera
         self.camera = cv2.VideoCapture(self.camera_num)
@@ -14,7 +15,7 @@ class DepthCamera(object):
         self.__scale = scale
         self.estimator = DepthEstimator(mode=mode, color=color)
 
-        print(f'Starting up depth scanner, running {mode} mode')
+        print(f'Starting up depth scanner, running {mode} mode and using {color} mapping.')
 
     def __repr__(self) -> str:
         return f'<DepthCamera | camera={self.camera_num}, device={str(self.estimator.device).upper()}>'
@@ -27,11 +28,11 @@ class DepthCamera(object):
         return self.__scale
 
     @scale.setter
-    def set_scale(self, new_scale_factor:float) -> None:
+    def set_scale(self, new_scale_factor: float) -> None:
         self.__scale = new_scale_factor
 
     @staticmethod
-    def __resize(image, factor:float=1.0) -> np.ndarray:
+    def __resize(image, factor: Optional[float] = 1.0) -> np.ndarray:
         """
         Scale an image evenly by a given factor.
 
@@ -40,13 +41,13 @@ class DepthCamera(object):
             factor (float, optional): Scaling factor. Defaults to 1.
 
         Returns:
-            np.ndarray: Rescaled image 
+            np.ndarray: Rescaled image
         """
         height, width, _ = image.shape
         new_dimensions = (round(width * factor), round(height * factor))
-        return cv2.resize(image, new_dimensions, interpolation=cv2.INTER_AREA)  
+        return cv2.resize(image, new_dimensions, interpolation=cv2.INTER_AREA)
 
-    def capture(self, frame) -> None:
+    def capture(self, frame: np.ndarray) -> None:
         """
         Capture a camera frame and render a depth map.
 
@@ -67,7 +68,7 @@ class DepthCamera(object):
         """
         self.is_running = True
         print(f'[{self.estimator.device.upper()}] Running depth scan...')
-        
+
         try:
             while self.is_running:
                 frame_start_time = perf_counter()
@@ -75,7 +76,7 @@ class DepthCamera(object):
                 display_frame = self.estimator.colormap(frame) if self.estimator.live_render else frame
                 frame_end_time = perf_counter()
                 fps = round(1 / (frame_end_time - frame_start_time))
-                window_label = "Depth Capture" if self.estimator.live_render else "Standard Camera" 
+                window_label = "Depth Capture" if self.estimator.live_render else "Standard Camera"
                 cv2.putText(display_frame, f'FPS: {fps}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (10, 255, 100), 2)
                 cv2.imshow(window_label, self.__resize(display_frame, factor=self.scale))
 

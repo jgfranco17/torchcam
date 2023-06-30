@@ -1,10 +1,11 @@
 import cv2
 import torch
 import numpy as np
+from typing import Optional
 
 
 class DepthEstimator:
-    def __init__(self, mode:str="standard", color:str="hot") -> None:
+    def __init__(self, mode: Optional[str] = "standard", color: Optional[str] = "hot") -> None:
         """
         Main camera architecture.
 
@@ -28,18 +29,18 @@ class DepthEstimator:
             "inferno": cv2.COLORMAP_INFERNO
         }
         if color.lower() not in map_style.keys():
-            raise ValueError(f'Invalid colormap color \"{color}\" provided.')        
+            raise ValueError(f'Invalid colormap color \"{color}\" provided.')
         self.map_color = map_style.get(color.lower())
-        
+
         # Configure PyTorch MiDaS
         modes = {
             "standard": False,
             "live": True
-        } 
+        }
         self.live_render = modes.get(mode, None)
         if self.live_render is None:
             raise ValueError(f'Unrecognized mode given: \"{mode}\"')
-        
+
         self.model_type = "MiDaS_small" if self.live_render else "DPT_Large"
         self.model = torch.hub.load("intel-isl/MiDaS", self.model_type)
         self.__device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -56,7 +57,7 @@ class DepthEstimator:
         return str(self.__device).upper()
 
     @staticmethod
-    def __normalize(frame, bits:int) -> np.ndarray:
+    def __normalize(frame, bits: int) -> np.ndarray:
         """
         Normalize the given map for OpenCV.
 
@@ -70,19 +71,19 @@ class DepthEstimator:
         depth_min = frame.min()
         depth_max = frame.max()
         max_val = (2 ** (8 * bits)) - 1
-        
+
         if depth_max - depth_min > np.finfo("float").eps:
             out = max_val * (frame - depth_min) / (depth_max - depth_min)
         else:
             out = np.zeros(frame.shape, dtype=frame.type)
-            
+
         if bits == 1:
             return out.astype("uint8")
-        return out.astype("uint16") 
+        return out.astype("uint16")
 
-    def get_depth(self, frame) -> np.ndarray:
+    def get_depth(self, frame: np.ndarray) -> np.ndarray:
         """
-        Apply MiDaS model to generate monocular depth estimation 
+        Apply MiDaS model to generate monocular depth estimation
         of an image frame.
 
         Args:
@@ -103,12 +104,12 @@ class DepthEstimator:
                 ).squeeze()
             depth_frame = prediction.cpu().numpy()
             return self.__normalize(depth_frame, bits=2)
-        
+
         except Exception as e:
             print(f'Failed to generate depth map: {e}')
             return None
 
-    def colormap(self, image) -> np.ndarray:
+    def colormap(self, image: np.ndarray) -> np.ndarray:
         """
         Recolor the depth map from grayscale to colored
 
