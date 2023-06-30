@@ -21,10 +21,11 @@ class DepthEstimator:
             "autumn": cv2.COLORMAP_AUTUMN,
             "rainbow": cv2.COLORMAP_RAINBOW,
             "bone": cv2.COLORMAP_BONE,
-            "hsv": cv2.COLORMAP_HSV,
+            "jet": cv2.COLORMAP_JET,
             "ocean": cv2.COLORMAP_OCEAN,
             "deepgreen": cv2.COLORMAP_DEEPGREEN,
-            "hot": cv2.COLORMAP_HOT
+            "hot": cv2.COLORMAP_HOT,
+            "inferno": cv2.COLORMAP_INFERNO
         }
         if color.lower() not in map_style.keys():
             raise ValueError(f'Invalid colormap color \"{color}\" provided.')        
