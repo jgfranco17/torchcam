@@ -53,7 +53,7 @@ class DepthEstimator:
         """
         Returns the device used to run MiDaS model
         """
-        return str(self.__device)
+        return str(self.__device).upper()
 
     @staticmethod
     def __normalize(frame, bits:int) -> np.ndarray:
