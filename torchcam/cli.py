@@ -7,9 +7,12 @@ import argparse
 from torchcam.camera import DepthCamera
 
 
-def read(*paths, **kwargs):
+def read(*paths, **kwargs) -> str:
     """
     Read the contents of a text file safely.
+    
+    Returns:
+        str: The contents of the file
     """
     content = ""
     with io.open(
@@ -20,26 +23,40 @@ def read(*paths, **kwargs):
     return content
 
 
-def config():
+def config() -> argparse.Namespace:
+    """
+    Creates a parsed configuration namespace from the CLI arguments.
+
+    Returns:
+        argparse.Namespace: Configuration namespace
+    """
     parser = argparse.ArgumentParser(
         prog="torchcam",
         description="Applying PyTorch MiDaS model on live webcam capture."
     )
-    parser.add_argument("mode",
-                        type=str,
-                        help="Set to \'live\' for live depth-capture, or \'standard\' otherwise")
-    parser.add_argument("--camera", "-c",
-                        type=int,
-                        default=0,
-                        help="Webcam port to capture, default is 0")
-    parser.add_argument("--window", "-w",
-                        type=float,
-                        default=1.0,
-                        help="Display window scale, default is 1")
-    parser.add_argument("--style", "-s",
-                        type=str,
-                        default="hot",
-                        help="Colormap styling, default is \'hot\'")
+    parser.add_argument(
+        "mode",
+        type=str,
+        help="Set to \'live\' for live depth-capture, or \'standard\' otherwise"
+    )
+    parser.add_argument(
+        "--camera", "-c",
+        type=int,
+        default=0,
+        help="Webcam port to capture, default is 0"
+    )
+    parser.add_argument(
+        "--window", "-w",
+        type=float,
+        default=1.0,
+        help="Display window scale, default is 1"
+    )
+    parser.add_argument(
+        "--style", "-s",
+        type=str,
+        default="hot",
+        help="Colormap styling, default is \'hot\'"
+    )
     args = parser.parse_args()
     return args
 
