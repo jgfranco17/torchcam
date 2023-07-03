@@ -37,7 +37,7 @@ def config() -> argparse.Namespace:
     parser.add_argument(
         "mode",
         type=str,
-        help="Set to \'live\' for live depth-capture, or \'standard\' otherwise"
+        help="Set to \'live\' for live depth-capture, or \'standard\' for single image capture."
     )
     parser.add_argument(
         "--camera", "-c",
