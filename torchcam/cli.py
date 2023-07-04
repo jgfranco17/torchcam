@@ -23,7 +23,7 @@ def read(*paths, **kwargs) -> str:
     return content
 
 
-def config() -> argparse.Namespace:
+def get_configs() -> argparse.Namespace:
     """
     Creates a parsed configuration namespace from the CLI arguments.
 
@@ -66,6 +66,6 @@ def main():
     The main function executes on commands:
     `python -m torchcam` and `$ torchcam`.
     """
-    args = config()
+    args = get_configs()
     scanner = DepthCamera(camera=args.camera, mode=args.mode, scale=args.window, color=args.style)
     scanner.run()
