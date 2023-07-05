@@ -24,7 +24,7 @@ This project uses PyTorch's [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) 
 ## 🔧 Project Structure <a name = "structure"></a>
 
 ```text
-jgfranco17/depth-camera/
+jgfranco17/torchcam/
 ├── .github/                            Github Actions suite
 │   │   ├── workflows                   GA workflows
 │   │   │   └── python-test.yml         Test installation on different Python versions
@@ -71,8 +71,8 @@ In order to use this project, you will need to have the following software and l
 To get started with this project for development purposes, clone the repository to your local machine and install the required dependencies.
 
 ```bash
-git clone https://github.com/jgfranco17/depth-camera.git
-cd depth-camera
+git clone https://github.com/jgfranco17/torchcam.git
+cd torchcam
 pip install -r requirements.txt
 ```
 
@@ -94,11 +94,11 @@ You can run these tests using the [PyTest](https://docs.pytest.org/en/7.3.x/) CL
 
 ```bash
 # Run all tests in the testing module with full detail
-cd depth-camera
+cd torchcam
 pytest -vv
 
 # Run a specific test file
-cd depth-camera/tests
+cd torchcam/tests
 pytest test_package.py
 ```
 
@@ -137,11 +137,11 @@ mode:
 To run as an installed CLI tool, use the pip manager to install via setuptools.
 
 ```bash
-cd depth-camera
+cd torchcam
 pip install .
 ```
 
-From there, the tool can be used similarly to above, only this time the `python3 app.py` can be replaced with `depth-camera`.
+From there, the tool can be used similarly to above, only this time the `python3 app.py` can be replaced with `torchcam`.
 
 A PyPi implementation is in the works, and instructions to install via official channels will be posted here when available.
 
