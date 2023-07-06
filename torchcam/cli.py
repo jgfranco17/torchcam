@@ -4,7 +4,7 @@ CLI base for TorchCam project.
 import io
 import os
 import argparse
-from torchcam.camera import DepthCamera
+from .camera import DepthCamera
 
 
 def read(*paths, **kwargs) -> str:
