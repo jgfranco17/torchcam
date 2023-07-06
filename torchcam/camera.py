@@ -100,8 +100,8 @@ class DepthCamera:
             while self.is_running:
                 frame_start_time = perf_counter()
                 ret, frame = self.camera.read()
-                frame_end_time = perf_counter()
                 display_frame = self.estimator.colormap(frame) if self.estimator.live_render else frame
+                frame_end_time = perf_counter()
                 fps = round(1 / (frame_end_time - frame_start_time))
                 window_label = "Depth Capture" if self.estimator.live_render else "Standard Camera"
                 display_frame = self.__resize(display_frame, factor=self.scale)
