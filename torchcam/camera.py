@@ -104,8 +104,9 @@ class DepthCamera:
                 display_frame = self.estimator.colormap(frame) if self.estimator.live_render else frame
                 fps = round(1 / (frame_end_time - frame_start_time))
                 window_label = "Depth Capture" if self.estimator.live_render else "Standard Camera"
+                display_frame = self.__resize(display_frame, factor=self.scale)
                 cv2.putText(display_frame, f'FPS: {fps}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (10, 255, 100), 2)
-                cv2.imshow(window_label, self.__resize(display_frame, factor=self.scale))
+                cv2.imshow(window_label, display_frame)
 
                 key = cv2.waitKey(10)
                 if key == 32 and not self.estimator.live_render:
