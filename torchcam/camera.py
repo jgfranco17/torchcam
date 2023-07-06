@@ -22,13 +22,20 @@ class DepthCamera:
         estimator (DepthEstimator): The depth estimation module.
     """
     def __init__(self, camera: Optional[int] = 0, mode: Optional[str] = "standard", scale: Optional[float] = 1.0, color: Optional[str] = "hot"):
-        # Set OpenCV video-capture parameters
+        """
+        Initialize the DepthCamera object.
+
+        Args:
+            camera (int, optional): Camera number. Defaults to 0.
+            mode (str, optional): Mode of depth estimation. Defaults to "standard".
+            scale (float, optional): Scale factor for window display. Defaults to 1.0.
+            color (str, optional): Color mapping. Defaults to "hot".
+        """
         self.camera_num = camera
         self.camera = cv2.VideoCapture(self.camera_num)
         self.is_running = False
         self.__scale = scale
         self.estimator = DepthEstimator(mode=mode, color=color)
-
         print(f'Starting up depth scanner, running {mode} mode and using {color} mapping.')
 
     def __repr__(self) -> str:
@@ -43,6 +50,12 @@ class DepthCamera:
 
     @scale.setter
     def set_scale(self, new_scale_factor: float) -> None:
+        """
+        Set the scale factor of the window display.
+
+        Args:
+            new_scale_factor (float): New scale factor
+        """
         self.__scale = new_scale_factor
 
     @staticmethod
@@ -97,8 +110,8 @@ class DepthCamera:
                 key = cv2.waitKey(10)
                 if key == 32 and not self.estimator.live_render:
                     self.capture(frame)  # Capture frame on spacebar press
-                if key == 27:
-                    print("Closing scanner...")  # Close windows when Esc is pressed
+                if key == 27 or key == ord("q"):
+                    print("Closing scanner...")  # Close windows when Esc or 'Q' is pressed
                     self.is_running = False
                     break
 
