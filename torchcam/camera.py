@@ -35,7 +35,7 @@ class DepthCamera:
         self.camera = cv2.VideoCapture(self.camera_num)
         self.is_running = False
         self.__scale = scale
-        self.estimator = DepthEstimator(mode=mode, color=color)
+        self.estimator = DepthEstimator(mode=mode, color=color.lower())
         print(f'Starting up depth scanner, running {mode} mode and using {color} mapping.')
 
     def __repr__(self) -> str:
@@ -94,7 +94,9 @@ class DepthCamera:
         Run the video camera.
         """
         self.is_running = True
-        print(f'[{self.estimator.device.upper()}] Running depth scan...')
+        date_today = dt.datetime.now().strftime("%d %B %Y")
+        timestamp = dt.datetime.now().strftime("%H:%M:%S")
+        print(f'[{date_today} | {timestamp}] Running monocular depth scan on {self.estimator.device.upper()}...')
 
         try:
             while self.is_running:
