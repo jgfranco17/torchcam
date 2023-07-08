@@ -13,13 +13,6 @@ class DepthCamera:
     This class represents a depth-scanning camera architecture that captures frames from a video source,
     applies depth estimation to the frames, and displays them on the screen. It provides functionality
     to control the depth estimation mode, color mapping, and scale factor of the displayed frames.
-
-    Attributes:
-        camera_num (int): The camera number to use (default is 0).
-        camera (cv2.VideoCapture): The OpenCV VideoCapture object representing the camera.
-        is_running (bool): Flag indicating if the camera is running.
-        __scale (float): Private attribute, the scale factor for the displayed frames.
-        estimator (DepthEstimator): The depth estimation module.
     """
     def __init__(self, camera: Optional[int] = 0, mode: Optional[str] = "standard", scale: Optional[float] = 1.0, color: Optional[str] = "hot"):
         """
