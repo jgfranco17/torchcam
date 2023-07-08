@@ -57,7 +57,7 @@ class DepthEstimator:
         return str(self.__device).upper()
 
     @staticmethod
-    def __normalize(frame, bits: int) -> np.ndarray:
+    def __normalize(frame: np.ndarray, bits: Optional[int] = 2) -> np.ndarray:
         """
         Normalize the given map for OpenCV.
 
