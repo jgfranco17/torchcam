@@ -52,7 +52,7 @@ class DepthCamera:
         self.__scale = new_scale_factor
 
     @staticmethod
-    def __resize(image: np.ndarray, factor: Optional[float] = 1.0) -> np.ndarray:
+    def __resize(image: np.ndarray, factor: float) -> np.ndarray:
         """
         Scale an image evenly by a given factor.
 

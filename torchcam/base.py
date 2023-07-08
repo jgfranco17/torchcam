@@ -45,7 +45,7 @@ class DepthEstimator:
         self.model_type = "MiDaS_small" if self.live_render else "DPT_Large"
         self.model = torch.hub.load("intel-isl/MiDaS", self.model_type)
         self.__device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(self.__device.lower())
+        self.model.to(self.__device)
         self.model.eval()
         midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
         self.transform = midas_transforms.small_transform if self.live_render else midas_transforms.dpt_transform
@@ -58,7 +58,7 @@ class DepthEstimator:
         return str(self.__device).upper()
 
     @staticmethod
-    def __normalize(frame: np.ndarray, bits: Optional[int] = 2) -> np.ndarray:
+    def __normalize(frame: np.ndarray, bits: int) -> np.ndarray:
         """
         Normalize the given map for OpenCV.
 
@@ -69,6 +69,9 @@ class DepthEstimator:
         Returns:
             np.ndarray: Normalized depth map
         """
+        if bits <= 0:
+            raise ValueError(f'Bitsize must be positive integer.')
+
         depth_min = frame.min()
         depth_max = frame.max()
         max_val = (2 ** (8 * bits)) - 1
@@ -76,7 +79,7 @@ class DepthEstimator:
         if depth_max - depth_min > np.finfo("float").eps:
             out = max_val * (frame - depth_min) / (depth_max - depth_min)
         else:
-            out = np.zeros(frame.shape, dtype=frame.type)
+            out = np.zeros(frame.shape, dtype=frame.dtype)
 
         if bits == 1:
             return out.astype("uint8")
@@ -108,7 +111,7 @@ class DepthEstimator:
 
         except Exception as e:
             print(f'Failed to generate depth map: {e}')
-            return None
+            return np.zeros(frame.shape)
 
     def colormap(self, image: np.ndarray) -> np.ndarray:
         """
