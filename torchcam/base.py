@@ -7,7 +7,8 @@ from typing import Optional
 class DepthEstimator:
     def __init__(self, mode: Optional[str] = "standard", color: Optional[str] = "hot") -> None:
         """
-        Main camera architecture.
+        Depth estimator module architecture. Sets the color
+        mapping and runs main calculations using MiDaS model.
 
         Args:
             mode (str, optional): Set camera to 'live' or 'standard'
@@ -44,7 +45,7 @@ class DepthEstimator:
         self.model_type = "MiDaS_small" if self.live_render else "DPT_Large"
         self.model = torch.hub.load("intel-isl/MiDaS", self.model_type)
         self.__device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(self.device.lower())
+        self.model.to(self.__device.lower())
         self.model.eval()
         midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
         self.transform = midas_transforms.small_transform if self.live_render else midas_transforms.dpt_transform
