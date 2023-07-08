@@ -10,7 +10,7 @@ from .camera import DepthCamera
 def read(*paths, **kwargs) -> str:
     """
     Read the contents of a text file safely.
-    
+
     Returns:
         str: The contents of the file
     """
