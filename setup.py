@@ -10,7 +10,6 @@ def read(*paths, **kwargs):
     """
     Read the contents of a text file safely.
     """
-
     content = ""
     with io.open(
         os.path.join(os.path.dirname(__file__), *paths),
@@ -21,18 +20,21 @@ def read(*paths, **kwargs):
 
 
 def read_requirements(path):
+    """
+    Read the requirements file line by line.
+    """
     return [
-        line.strip()
-        for line in read(path).split("\n")
+        line.strip() for line in read(path).split("\n")
         if not line.startswith(('"', "#", "-", "git+"))
     ]
 
 
+# Run setup
 setup(
     name="torchcam",
     version=read("torchcam", "VERSION"),
     description="Apply PyTorch MiDaS depth estimation on webcam feed.",
-    url="https://github.com/jgfranco17/depth-camera",
+    url="https://github.com/jgfranco17/torchcam",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     author="jgfranco17",
