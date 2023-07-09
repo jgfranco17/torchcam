@@ -19,12 +19,12 @@ setup:  ## Execute installation.
 	@echo "Project setup complete!"
 	
 .PHONY: run-live
-run:  ## Launch app in live mode.
+run-live:  ## Launch app in live mode.
 	@echo "Running live capture..."
 	@python3 app.py live --camera 0 --style inferno
 
 .PHONY: run-standard
-run:  ## Launch app in standard mode.
+run-standard:  ## Launch app in standard mode.
 	@echo "Running standard capture..."
 	@python3 app.py standard --camera 0 --style inferno
 
