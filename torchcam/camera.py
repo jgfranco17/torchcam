@@ -94,7 +94,7 @@ class DepthCamera:
         try:
             while self.is_running:
                 frame_start_time = perf_counter()
-                ret, frame = self.camera.read()
+                _, frame = self.camera.read()
                 display_frame = self.estimator.colormap(frame) if self.estimator.live_render else frame
                 frame_end_time = perf_counter()
                 fps = round(1 / (frame_end_time - frame_start_time))
