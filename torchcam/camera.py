@@ -93,6 +93,7 @@ class DepthCamera:
 
         try:
             while self.is_running:
+                # Render frame through depth estimation
                 frame_start_time = perf_counter()
                 _, frame = self.camera.read()
                 display_frame = self.estimator.colormap(frame) if self.estimator.live_render else frame
@@ -103,6 +104,7 @@ class DepthCamera:
                 cv2.putText(display_frame, f'FPS: {fps}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (10, 255, 100), 2)
                 cv2.imshow(window_label, display_frame)
 
+                # Keyboard input handling
                 key = cv2.waitKey(10)
                 if key == 32 and not self.estimator.live_render:
                     self.capture(frame)  # Capture frame on spacebar press
