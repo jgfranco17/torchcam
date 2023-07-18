@@ -14,7 +14,14 @@ class DepthCamera:
     applies depth estimation to the frames, and displays them on the screen. It provides functionality
     to control the depth estimation mode, color mapping, and scale factor of the displayed frames.
     """
-    def __init__(self, camera: Optional[int] = 0, mode: Optional[str] = "standard", scale: Optional[float] = 1.0, color: Optional[str] = "hot"):
+
+    def __init__(
+        self,
+        camera: Optional[int] = 0,
+        mode: Optional[str] = "standard",
+        scale: Optional[float] = 1.0,
+        color: Optional[str] = "hot",
+    ):
         """
         Initialize the DepthCamera object.
 
@@ -29,10 +36,12 @@ class DepthCamera:
         self.is_running = False
         self.__scale = scale
         self.estimator = DepthEstimator(mode=mode, color=color.lower())
-        print(f'Starting up depth scanner, running {mode} mode and using {color} mapping.')
+        print(
+            f"Starting up depth scanner, running {mode} mode and using {color} mapping."
+        )
 
     def __repr__(self) -> str:
-        return f'<DepthCamera | camera={self.camera_num}, device={str(self.estimator.device).upper()}>'
+        return f"<DepthCamera | camera={self.camera_num}, device={str(self.estimator.device).upper()}>"
 
     @property
     def scale(self) -> float:
@@ -79,8 +88,8 @@ class DepthCamera:
         # Display colored depth map
         date_today = dt.datetime.now().strftime("%d %B %Y")
         timestamp = dt.datetime.now().strftime("%H:%M:%S")
-        print(f'[{date_today} | {timestamp}] Frame captured!')
-        cv2.imshow(f'Depth Scan - {timestamp}', colored_map)
+        print(f"[{date_today} | {timestamp}] Frame captured!")
+        cv2.imshow(f"Depth Scan - {timestamp}", colored_map)
 
     def run(self) -> None:
         """
@@ -89,19 +98,33 @@ class DepthCamera:
         self.is_running = True
         date_today = dt.datetime.now().strftime("%d %B %Y")
         timestamp = dt.datetime.now().strftime("%H:%M:%S")
-        print(f'[{date_today} | {timestamp}] Running monocular depth scan on {self.estimator.device.upper()}.')
+        print(
+            f"[{date_today} | {timestamp}] Running monocular depth scan on {self.estimator.device.upper()}."
+        )
 
         try:
             while self.is_running:
                 # Render frame through depth estimation
                 frame_start_time = perf_counter()
                 _, frame = self.camera.read()
-                display_frame = self.estimator.colormap(frame) if self.estimator.live_render else frame
+                display_frame = (
+                    self.estimator.colormap(frame)
+                    if self.estimator.live_render
+                    else frame
+                )
                 frame_end_time = perf_counter()
                 fps = round(1 / (frame_end_time - frame_start_time))
                 window_label = "Depth Capture" if self.estimator.live_render else "Standard Camera"
                 display_frame = self.__resize(display_frame, factor=self.scale)
-                cv2.putText(display_frame, f'FPS: {fps}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (10, 255, 100), 2)
+                cv2.putText(
+                    img=display_frame,
+                    text=f"FPS: {fps}",
+                    org=(10, 30),
+                    fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale=0.7,
+                    color=(10, 255, 100),
+                    thickness=2,
+                )
                 cv2.imshow(window_label, display_frame)
 
                 # Keyboard input handling
@@ -109,12 +132,12 @@ class DepthCamera:
                 if key == 32 and not self.estimator.live_render:
                     self.capture(frame)  # Capture frame on spacebar press
                 if key == 27 or key == ord("q"):
-                    print("Exiting program.")  # Close windows when Esc or 'Q' is pressed
+                    print("Exiting program.")
                     self.is_running = False
                     break
 
         except Exception as e:
-            print(f'Error during camera streaming: {e}')
+            print(f"Error during camera streaming: {e}")
 
         finally:
             self.camera.release()
