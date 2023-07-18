@@ -1,4 +1,3 @@
-import argparse
 from torchcam.camera import DepthCamera
 from torchcam.cli import get_configs
 
