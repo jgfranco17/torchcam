@@ -5,7 +5,9 @@ from typing import Optional
 
 
 class DepthEstimator:
-    def __init__(self, mode: Optional[str] = "standard", color: Optional[str] = "hot") -> None:
+    def __init__(
+        self, mode: Optional[str] = "standard", color: Optional[str] = "hot"
+    ) -> None:
         """
         Depth estimator module architecture. Sets the color
         mapping and runs main calculations using MiDaS model.
@@ -27,20 +29,17 @@ class DepthEstimator:
             "ocean": cv2.COLORMAP_OCEAN,
             "deepgreen": cv2.COLORMAP_DEEPGREEN,
             "hot": cv2.COLORMAP_HOT,
-            "inferno": cv2.COLORMAP_INFERNO
+            "inferno": cv2.COLORMAP_INFERNO,
         }
         if color.lower() not in map_style.keys():
-            raise ValueError(f'Invalid colormap color \"{color}\" provided.')
+            raise ValueError(f'Invalid colormap color "{color}" provided.')
         self.map_color = map_style.get(color.lower())
 
         # Configure PyTorch MiDaS
-        modes = {
-            "standard": False,
-            "live": True
-        }
+        modes = {"standard": False, "live": True}
         self.live_render = modes.get(mode, None)
         if self.live_render is None:
-            raise ValueError(f'Unrecognized mode given: \"{mode}\"')
+            raise ValueError(f'Unrecognized mode given: "{mode}"')
 
         self.model_type = "MiDaS_small" if self.live_render else "DPT_Large"
         self.model = torch.hub.load("intel-isl/MiDaS", self.model_type)
@@ -48,7 +47,11 @@ class DepthEstimator:
         self.model.to(self.__device)
         self.model.eval()
         midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
-        self.transform = midas_transforms.small_transform if self.live_render else midas_transforms.dpt_transform
+        self.transform = (
+            midas_transforms.small_transform
+            if self.live_render
+            else midas_transforms.dpt_transform
+        )
 
     @property
     def device(self) -> str:
@@ -70,7 +73,7 @@ class DepthEstimator:
             np.ndarray: Normalized depth map
         """
         if bits <= 0:
-            raise ValueError(f'Bitsize must be positive integer.')
+            raise ValueError(f"Bitsize must be positive integer.")
 
         depth_min = frame.min()
         depth_max = frame.max()
@@ -110,7 +113,7 @@ class DepthEstimator:
             return self.__normalize(depth_frame, bits=2)
 
         except Exception as e:
-            print(f'Failed to generate depth map: {e}')
+            print(f"Failed to generate depth map: {e}")
             return np.zeros(frame.shape)
 
     def colormap(self, image: np.ndarray) -> np.ndarray:
@@ -124,5 +127,5 @@ class DepthEstimator:
             np.ndarray: Colored map image
         """
         depth_map = self.get_depth(image)
-        depth_map = (depth_map/256).astype(np.uint8)
+        depth_map = (depth_map / 256).astype(np.uint8)
         return cv2.applyColorMap(depth_map, self.map_color)
