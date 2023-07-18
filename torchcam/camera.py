@@ -89,7 +89,7 @@ class DepthCamera:
         self.is_running = True
         date_today = dt.datetime.now().strftime("%d %B %Y")
         timestamp = dt.datetime.now().strftime("%H:%M:%S")
-        print(f'[{date_today} | {timestamp}] Running monocular depth scan on {self.estimator.device.upper()}...')
+        print(f'[{date_today} | {timestamp}] Running monocular depth scan on {self.estimator.device.upper()}.')
 
         try:
             while self.is_running:
@@ -109,7 +109,7 @@ class DepthCamera:
                 if key == 32 and not self.estimator.live_render:
                     self.capture(frame)  # Capture frame on spacebar press
                 if key == 27 or key == ord("q"):
-                    print("Closing scanner...")  # Close windows when Esc or 'Q' is pressed
+                    print("Exiting program.")  # Close windows when Esc or 'Q' is pressed
                     self.is_running = False
                     break
 
