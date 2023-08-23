@@ -129,7 +129,7 @@ class DepthCamera:
 
                 # Keyboard input handling
                 key = cv2.waitKey(10)
-                if key == 32 and not self.estimator.live_render:
+                if key == 32 or key == ord("c") and not self.estimator.live_render:
                     self.capture(frame)  # Capture frame on spacebar press
                 if key == 27 or key == ord("q"):
                     print("Exiting program.")
