@@ -35,7 +35,7 @@ def get_configs() -> argparse.Namespace:
         description="Applying PyTorch MiDaS model on live webcam capture."
     )
     parser.add_argument(
-        "mode",
+        "--mode",
         type=str,
         help="Set to \'live\' for live depth-capture, or \'standard\' for single image capture."
     )
