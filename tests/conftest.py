@@ -1,6 +1,7 @@
 import cv2
-import torch
 import pytest
+import torch
+
 from torchcam.base import DepthEstimator
 from torchcam.camera import DepthCamera
 

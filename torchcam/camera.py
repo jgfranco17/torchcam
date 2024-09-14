@@ -1,8 +1,10 @@
-import cv2
-import numpy as np
 import datetime as dt
 from time import perf_counter
 from typing import Optional
+
+import cv2
+import numpy as np
+
 from .base import DepthEstimator
 
 
@@ -114,7 +116,9 @@ class DepthCamera:
                 )
                 frame_end_time = perf_counter()
                 fps = round(1 / (frame_end_time - frame_start_time))
-                window_label = "Depth Capture" if self.estimator.live_render else "Standard Camera"
+                window_label = (
+                    "Depth Capture" if self.estimator.live_render else "Standard Camera"
+                )
                 display_frame = self.__resize(display_frame, factor=self.scale)
                 cv2.putText(
                     img=display_frame,

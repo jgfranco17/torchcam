@@ -1,5 +1,6 @@
 import cv2
 import pytest
+
 from .conftest import webcam
 
 
@@ -10,8 +11,8 @@ def test_video_capture(webcam):
     assert webcam.isOpened(), "Webcam failed to open"
     ret, frame = webcam.read()
     assert ret, "Failed to read frame from webcam"
-    
-    
+
+
 def test_video_capture_frame_rate(webcam):
     """
     Test that the video capture cycles through the feed.

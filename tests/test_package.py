@@ -1,4 +1,5 @@
 import pytest
+
 from torchcam.base import DepthEstimator
 from torchcam.camera import DepthCamera
 
@@ -45,8 +46,8 @@ def test_depth_camera_scale(depth_camera):
     Test the default scale property.
     """
     assert depth_camera.scale == 1.0
-    
-    
+
+
 def test_depth_camera_run(depth_camera):
     """
     Test the run() method.
@@ -54,6 +55,3 @@ def test_depth_camera_run(depth_camera):
     dc = DepthCamera()
     dc.is_running = False
     assert not dc.is_running
-
-
-

@@ -1,7 +1,8 @@
-import cv2
-import torch
-import numpy as np
 from typing import Optional
+
+import cv2
+import numpy as np
+import torch
 
 
 class DepthEstimator:

@@ -17,7 +17,7 @@ setup:  ## Execute installation.
 	@echo "Setting up project requirements."
 	@pip3 install -r requirements.txt
 	@echo "Project setup complete!"
-	
+
 .PHONY: run-live
 run-live:  ## Launch app in live mode.
 	@echo "Running live capture..."
@@ -67,7 +67,7 @@ clean:  ## Clean unused files.
 	@echo "Cleaned out unused files and directories!"
 
 .PHONY: test-build
-test-build: 
+test-build:
 	@python3 -m venv .venv
 	@source ./.venv/bin/activate
 	@echo "Setting up project..."

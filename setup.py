@@ -3,6 +3,7 @@ Python setup.py for depth-camera package
 """
 import io
 import os
+
 from setuptools import find_packages, setup
 
 
@@ -24,7 +25,8 @@ def read_requirements(path):
     Read the requirements file line by line.
     """
     return [
-        line.strip() for line in read(path).split("\n")
+        line.strip()
+        for line in read(path).split("\n")
         if not line.startswith(('"', "#", "-", "git+"))
     ]
 
@@ -38,17 +40,15 @@ setup(
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     author="jgfranco17",
-    classifiers = [
+    classifiers=[
         "Natural Language :: English",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Topic :: Scientific/Engineering :: Image Processing"
+        "Topic :: Scientific/Engineering :: Image Processing",
     ],
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
-    entry_points={
-        "console_scripts": ["torchcam = torchcam.__main__:main"]
-    },
+    entry_points={"console_scripts": ["torchcam = torchcam.__main__:main"]},
     extras_require={"test": read_requirements("requirements-test.txt")},
 )

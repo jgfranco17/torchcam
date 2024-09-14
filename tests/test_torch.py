@@ -1,5 +1,6 @@
-import torch
 import pytest
+import torch
+
 from .conftest import basic_tensor
 
 
@@ -19,11 +20,7 @@ def test_tensor_construction():
     """
     Check the generation of new tensors from Python built-ins
     """
-    tensor = torch.tensor([
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
-    ])
+    tensor = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 
     assert tensor.shape == (3, 3), "Incorrect tensor shape"
     assert tensor.dtype == torch.int64, "Incorrect tensor type"

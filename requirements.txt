@@ -1,5 +1,5 @@
-timm
-typer
-torch
 numpy
 opencv-python
+timm
+torch
+typer

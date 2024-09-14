@@ -10,12 +10,12 @@
 
 ## 📝 Table of Contents
 
-* [About](#about)
-* [Project Structure](#structure)
-* [Getting Started](#getting_started)
-* [Usage](#usage)
-* [Testing](#testing)
-* [Authors](#authors)
+- [About](#about)
+- [Project Structure](#structure)
+- [Getting Started](#getting_started)
+- [Usage](#usage)
+- [Testing](#testing)
+- [Authors](#authors)
 
 ## 🔎 About <a name = "about"></a>
 
@@ -29,7 +29,7 @@ jgfranco17/torchcam/
 │   │   ├── workflows                   GA workflows
 │   │   │   └── python-test.yml         Test installation on different Python versions
 │   │   └── ISSUE_TEMPLATES             Templates for requests/reports
-│   │       ├── bug_report.md           Reporting a bug          
+│   │       ├── bug_report.md           Reporting a bug
 │   │       └── feature_request.md      Request implementation of a new feature
 ├── depthscan/                          Python package directory
 │   ├── __init__.py                     Makes the directory a package
@@ -45,7 +45,7 @@ jgfranco17/torchcam/
 │   ├── test_package.py                 Unittests for the package scripts
 │   └── test_torch.py                   Unittests for PyTorch
 ├── app.py                              Base runnable script
-├── .gitignore                          List of files to be ignored for Git 
+├── .gitignore                          List of files to be ignored for Git
 ├── LICENSE                             Project license
 ├── Makefile                            Build scripts for setup and usage
 ├── pyproject.toml                      Definition of package build process using TOML
@@ -61,10 +61,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-In order to use this project, you will need to have the following software and libraries installed:  
-* PyTorch
-* OpenCV
-* NumPy
+In order to use this project, you will need to have the following software and libraries installed:
+
+- PyTorch
+- OpenCV
+- NumPy
 
 ### Installing
 
@@ -106,7 +107,7 @@ pytest test_package.py
 
 Running these unittests is necessary to ensure that the code is functioning as expected and meeting the requirements of the design specification. The unittests are designed to test each function and method of the code and to identify any errors or unexpected behavior. By testing the code using these PyTest unittests, we can ensure that the code meets the specified requirements and that any changes made to the code do not introduce new bugs or errors.
 
-In addition, these tests can be automated to run on every code change, allowing us to quickly identify any issues that may arise and enabling us to maintain a high level of code quality. 
+In addition, these tests can be automated to run on every code change, allowing us to quickly identify any issues that may arise and enabling us to maintain a high level of code quality.
 
 In essence, running these PyTest unittests is a critical part of the software QA process and helps to ensure that our code is robust, reliable, and meets the needs of our end-users before the product hits deployment.
 
@@ -126,9 +127,10 @@ python3 app.py --camera <camera number> --mode [live|standard]
 
 ### Config options
 
-camera: webcam number, `0` refers to the default webcam of the computer  
+camera: webcam number, `0` refers to the default webcam of the computer
 
-mode:  
+mode:
+
 - `standard` - Displays plain camera view, press `c` key to capture and convert to depth map
 - `live` - Displays live depth map render, lower frame rate due to conversion per frame
 
@@ -146,6 +148,7 @@ From there, the tool can be used similarly to above, only this time the `python3
 A PyPi implementation is in the works, and instructions to install via official channels will be posted here when available.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
+
 ![OpenCV](https://img.shields.io/badge/PyTorch-1.13.0-orange?style=for-the-badge&logo=pytorch&logoColor=orange) ![OpenCV](https://img.shields.io/badge/OpenCV-4.6.0-orange?style=for-the-badge&logo=opencv&logoColor=orange) ![NumPy](https://img.shields.io/badge/numpy-1.23.4-orange?style=for-the-badge&logo=numpy&logoColor=orange)
 
 ## ✍️ Authors <a name = "authors"></a>
