@@ -124,27 +124,6 @@ Author: Chino Franco
 Github: https://github.com/jgfranco17
 ```
 
-### Config options
-
-camera: webcam number, `0` refers to the default webcam of the computer
-
-mode:
-
-- `standard` - Displays plain camera view, press `c` key to capture and convert to depth map
-- `live` - Displays live depth map render, lower frame rate due to conversion per frame
-
-### Running as CLI tool
-
-To run as an installed CLI tool, use the pip manager to install via setuptools.
-
-```bash
-cd torchcam
-pip install .
-```
-
-From there, the tool can be used similarly to above, only this time the `python3 app.py` can be replaced with
-`torchcam`.
-
 A PyPi implementation is in the works, and instructions to install via official channels will be posted here
 when available.
 
