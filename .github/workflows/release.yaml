@@ -1,0 +1,86 @@
+name: Production Release
+
+on:
+  push:
+    paths:
+      - "pyproject.toml"
+      - "torchcam/__init__.py"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10.4"
+
+      - name: Install poetry
+        shell: bash
+        run: |
+          pip install --upgrade pip
+          pip install poetry==1.8.3
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Install Just
+        uses: extractions/setup-just@v2
+
+      - name: Run tests
+        run: |
+          just pytest -vv
+
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+    needs: verify
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10.4"
+
+      - name: Install poetry
+        shell: bash
+        run: |
+          pip install --upgrade pip
+          pip install poetry==1.8.3
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Build Python package
+        run: |
+          poetry build
+
+      - name: Extract version from TOML
+        id: extract-version
+        run: |
+          ./sync-versions.sh
+          VERSION=$(grep -oP '^version = "\K[^"]+' pyproject.toml)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Install Github CLI
+        run: |
+          sudo apt-get install gh
+
+      - name: Post release notes to summary
+        if: success()
+        run: |
+          cat .github/release/${{ env.VERSION }}.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.USER_GITHUB_TOKEN }}
+          VERSION: ${{ env.VERSION }}
+        run: |
+          gh release create "${{ env.VERSION }}" --title "${{ env.VERSION }}" dist/*
