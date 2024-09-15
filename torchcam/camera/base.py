@@ -17,17 +17,17 @@ class DepthEstimator:
     def __init__(
         self, mode: Optional[str] = "standard", color: Optional[str] = "hot"
     ) -> None:
-        """
-        Depth estimator module architecture. Sets the color
-        mapping and runs main calculations using MiDaS model.
+        """#-
+        Initialize the DepthEstimator class. This class uses PyTorch's Midas model to generate#+
+        estimated depth maps.#+
 
         Args:
-            mode (str, optional): Set camera to 'live' or 'standard'
-            color (str, optional): Colormap display style
+            mode (str, optional): Set the camera mode to 'live' or 'standard', defaults to 'standard'.#+
+            color (str, optional): Set the colormap display style, defaults to 'hot'.#+
 
         Raises:
-            TorchcamInputError: If invalid colormap scheme is provided
-            TorchcamInputError: If invalid scan mode is given
+            TorchcamInputError: If an invalid colormap scheme is provided.#+
+            TorchcamInputError: If an invalid scan mode is given.#+
         """
         # Set colormap styling
         self.map_color = self.__get_colormap(color)
