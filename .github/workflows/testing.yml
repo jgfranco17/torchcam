@@ -35,7 +35,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          poetry run coverage run --source=torchcam --omit="*/__*.py,*/test_*.py" -m pytest
+          poetry run coverage run --source=torchcam --omit="*/__*.py,*/test_*.py" -m pytest -vv -rA
           poetry run coverage report -m > coverage.txt
 
       - name: Create GHA job summary
