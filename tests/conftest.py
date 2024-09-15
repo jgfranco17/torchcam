@@ -1,32 +1,55 @@
-import cv2
+import logging
+from copy import deepcopy
+from typing import Generator, List, Tuple
+from unittest.mock import MagicMock, patch
+
 import pytest
-import torch
+from click.testing import CliRunner, Result
 
-from torchcam.base import DepthEstimator
-from torchcam.camera import DepthCamera
-
-
-@pytest.fixture(scope="module")
-def webcam():
-    cap = cv2.VideoCapture(0)
-    yield cap
-    cap.release()
+from torchcam.main import cli
+from torchcam.output import ColorHandler
 
 
-@pytest.fixture(scope="module")
-def basic_tensor():
-    # Create a PyTorch tensor with random values
-    tensor = torch.randn((3, 224, 224))
-    yield tensor
+class TestRunner:
+    def __init__(self):
+        self.env = {
+            "GITHUB_USERNAME": "test-user",
+            "GITHUB_API_TOKEN": "my-github-api-token",  # pragma: allowlist secret
+        }
+        self.__runner = CliRunner(mix_stderr=False)
+
+    @property
+    def directory(self) -> str:
+        return self.__working_dir
+
+    def run_cli(self, cli_args: List[str]) -> Result:
+        """Run the Torchcam CLI with envs set."""
+        env = deepcopy(self.env)
+        return self.__runner.invoke(cli, cli_args, env=env)
 
 
-@pytest.fixture(scope="module")
-def depth_estimator():
-    sample_estimator = DepthEstimator()
-    yield sample_estimator
+class MockLogger:
+    def __init__(self) -> None:
+        self.logger = logging.getLogger("mock-logger")
+        self.logger.setLevel(logging.DEBUG)
+        self.handler = ColorHandler()
+        self.logger.addHandler(self.handler)
+
+    def get_log_and_handler(self) -> Tuple[logging.Logger, ColorHandler]:
+        return self.logger, self.handler
 
 
-@pytest.fixture(scope="module")
-def depth_camera():
-    dc = DepthCamera()
-    yield dc
+@pytest.fixture
+def runner() -> TestRunner:
+    return TestRunner()
+
+
+@pytest.fixture
+def logger() -> MockLogger:
+    return MockLogger()
+
+
+@pytest.fixture
+def mock_datetime() -> Generator[MagicMock, None, None]:
+    with patch("torchcam.models.dt.datetime") as mock_datetime:
+        yield mock_datetime

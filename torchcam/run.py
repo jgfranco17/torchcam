@@ -5,7 +5,7 @@ import logging
 
 import click
 
-from .camera import DepthCamera
+from .camera.depth_camera import DepthCamera
 
 logger = logging.getLogger(__name__)
 

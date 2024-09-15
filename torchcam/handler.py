@@ -4,7 +4,7 @@ from typing import Any, Dict
 
 import click
 
-from .errors import ExitCode, TorchcamBaseError
+from .camera.errors import ExitCode, TorchcamBaseError
 from .output import print_warning
 
 logger = logging.getLogger(__name__)

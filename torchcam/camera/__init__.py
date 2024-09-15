@@ -1,0 +1,1 @@
+"""Main camera module"""

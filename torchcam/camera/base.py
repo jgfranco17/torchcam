@@ -4,6 +4,9 @@ import cv2
 import numpy as np
 import torch
 
+from .constants import DepthMapColors
+from .errors import TorchcamInputError
+
 
 class DepthEstimator:
     def __init__(
@@ -18,33 +21,21 @@ class DepthEstimator:
             color (str, optional): Colormap display style
 
         Raises:
-            ValueError: If invalid colormap scheme is provided
-            ValueError: If invalid scan mode is given
+            TorchcamInputError: If invalid colormap scheme is provided
+            TorchcamInputError: If invalid scan mode is given
         """
         # Set colormap styling
-        map_style = {
-            "autumn": cv2.COLORMAP_AUTUMN,
-            "rainbow": cv2.COLORMAP_RAINBOW,
-            "bone": cv2.COLORMAP_BONE,
-            "jet": cv2.COLORMAP_JET,
-            "ocean": cv2.COLORMAP_OCEAN,
-            "deepgreen": cv2.COLORMAP_DEEPGREEN,
-            "hot": cv2.COLORMAP_HOT,
-            "inferno": cv2.COLORMAP_INFERNO,
-        }
-        if color.lower() not in map_style.keys():
-            raise ValueError(f'Invalid colormap color "{color}" provided.')
-        self.map_color = map_style.get(color.lower())
+        self.map_color = self.__get_colormap(color)
 
         # Configure PyTorch MiDaS
         modes = {"standard": False, "live": True}
         self.live_render = modes.get(mode, None)
         if self.live_render is None:
-            raise ValueError(f'Unrecognized mode given: "{mode}"')
+            raise TorchcamInputError(f'Unrecognized mode given: "{mode}"')
 
         self.model_type = "MiDaS_small" if self.live_render else "DPT_Large"
         self.model = torch.hub.load("intel-isl/MiDaS", self.model_type)
-        self.__device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.__device = self.__set_device()
         self.model.to(self.__device)
         self.model.eval()
         midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
@@ -62,6 +53,20 @@ class DepthEstimator:
         return str(self.__device).upper()
 
     @staticmethod
+    def __set_device() -> torch.device:
+        device_type = "cuda" if torch.cuda.is_available() else "cpu"
+        return torch.device(device_type)
+
+    @staticmethod
+    def __get_colormap(color: str) -> int:
+        if color.lower() not in DepthMapColors.COLOR_SCHEMES.keys():
+            raise TorchcamInputError(
+                f"Invalid colormap color '{color}' provided",
+                help_text=f"Must be one of the following: {DepthMapColors.COLOR_SCHEMES.keys()}",
+            )
+        return DepthMapColors.COLOR_SCHEMES.get(color, DepthMapColors.DEFAULT)
+
+    @staticmethod
     def __normalize(frame: np.ndarray, bits: int) -> np.ndarray:
         """
         Normalize the given map for OpenCV.
@@ -74,7 +79,7 @@ class DepthEstimator:
             np.ndarray: Normalized depth map
         """
         if bits <= 0:
-            raise ValueError(f"Bitsize must be positive integer.")
+            raise TorchcamInputError(f"Bitsize must be positive integer.")
 
         depth_min = frame.min()
         depth_max = frame.max()

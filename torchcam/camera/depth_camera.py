@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 
 from .base import DepthEstimator
+from .constants import KeyboardKeys
 from .errors import TorchcamRuntimeError
 
 logger = logging.getLogger(__name__)
@@ -94,7 +95,7 @@ class DepthCamera:
         # Display colored depth map
         date_today = dt.datetime.now().strftime("%d %B %Y")
         timestamp = dt.datetime.now().strftime("%H:%M:%S")
-        print(f"[{date_today} | {timestamp}] Frame captured!")
+        logger.info("Frame captured!")
         cv2.imshow(f"Depth Scan - {timestamp}", colored_map)
 
     def run(self) -> None:
@@ -133,10 +134,10 @@ class DepthCamera:
 
                 # Keyboard input handling
                 key = cv2.waitKey(10)
-                if key == 32 and not self.estimator.live_render:
+                if key == KeyboardKeys.SPACE and not self.estimator.live_render:
                     self.capture(frame)  # Capture frame on spacebar press
-                if key == 27 or key == ord("q"):
-                    print("Exiting program.")
+                if key in (KeyboardKeys.ESC, KeyboardKeys.LETTER_Q):
+                    logger.info("Exiting program...")
                     self.is_running = False
                     break
 
@@ -147,4 +148,4 @@ class DepthCamera:
             self.camera.release()
             cv2.destroyAllWindows()
 
-        print("Scanner closed!")
+        logger.info("Scanner closed!")
