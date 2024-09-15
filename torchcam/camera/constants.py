@@ -25,3 +25,16 @@ class DepthMapColors:
         "inferno": cv2.COLORMAP_INFERNO,
     }
     DEFAULT: Final[int] = cv2.COLORMAP_INFERNO
+
+
+@dataclass(frozen=True)
+class MidasTorch:
+    # MiDaS source
+    MIDAS_SOURCE: Final[str] = "intel-isl/MiDaS"
+    # Model sizes
+    MODEL_SMALL: Final[str] = "MiDaS_small"
+    MODEL_MEDIUM: Final[str] = "DPT_Hybrid"
+    MODEL_LARGE: Final[str] = "DPT_Large"
+    # Device type
+    DEVICE_CPU: Final[str] = "cpu"
+    DEVICE_GPU: Final[str] = "cuda"

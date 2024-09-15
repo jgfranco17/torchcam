@@ -1,14 +1,19 @@
-from typing import Optional
+from typing import Any, Optional, Tuple
 
 import cv2
 import numpy as np
 import torch
 
-from .constants import DepthMapColors
+from .constants import DepthMapColors, MidasTorch
 from .errors import TorchcamInputError
 
 
 class DepthEstimator:
+    """Depth estimator main class.
+
+    Uses PyTorch's Midas model for generating estimated depth maps.
+    """
+
     def __init__(
         self, mode: Optional[str] = "standard", color: Optional[str] = "hot"
     ) -> None:
@@ -33,16 +38,25 @@ class DepthEstimator:
         if self.live_render is None:
             raise TorchcamInputError(f'Unrecognized mode given: "{mode}"')
 
-        self.model_type = "MiDaS_small" if self.live_render else "DPT_Large"
-        self.model = torch.hub.load("intel-isl/MiDaS", self.model_type)
+        self.model_type, self.label, self.transform = self.__configure_midas(
+            self.live_render
+        )
+        self.model = torch.hub.load(MidasTorch.MIDAS_SOURCE, self.model_type)
         self.__device = self.__set_device()
         self.model.to(self.__device)
         self.model.eval()
-        midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
-        self.transform = (
-            midas_transforms.small_transform
-            if self.live_render
-            else midas_transforms.dpt_transform
+
+    @staticmethod
+    def __configure_midas(is_live: bool) -> Tuple[str, str, Any]:
+        midas_transforms = torch.hub.load(MidasTorch.MIDAS_SOURCE, "transforms")
+        return (
+            (MidasTorch.MODEL_SMALL, "Depth Capture", midas_transforms.small_transform)
+            if is_live
+            else (
+                MidasTorch.MODEL_LARGE,
+                "Standard Camera",
+                midas_transforms.dpt_transform,
+            )
         )
 
     @property
@@ -54,7 +68,11 @@ class DepthEstimator:
 
     @staticmethod
     def __set_device() -> torch.device:
-        device_type = "cuda" if torch.cuda.is_available() else "cpu"
+        device_type = (
+            MidasTorch.DEVICE_GPU
+            if torch.cuda.is_available()
+            else MidasTorch.DEVICE_CPU
+        )
         return torch.device(device_type)
 
     @staticmethod

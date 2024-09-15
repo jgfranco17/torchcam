@@ -117,9 +117,6 @@ class DepthCamera:
                 )
                 frame_end_time = perf_counter()
                 fps = round(1 / (frame_end_time - frame_start_time))
-                window_label = (
-                    "Depth Capture" if self.estimator.live_render else "Standard Camera"
-                )
                 display_frame = self.__resize(display_frame, factor=self.scale)
                 cv2.putText(
                     img=display_frame,
@@ -130,7 +127,7 @@ class DepthCamera:
                     color=(10, 255, 100),
                     thickness=2,
                 )
-                cv2.imshow(window_label, display_frame)
+                cv2.imshow(self.estimator.label, display_frame)
 
                 # Keyboard input handling
                 key = cv2.waitKey(10)
