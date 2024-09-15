@@ -8,7 +8,7 @@ import numpy as np
 
 from .constants import KeyboardKeys
 from .errors import TorchcamRuntimeError
-from .estimator import DepthEstimator
+from .estimator import Estimator
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +42,7 @@ class DepthCamera:
         self.camera = cv2.VideoCapture(self.camera_num)
         self.is_running = False
         self.__scale = scale
-        self.estimator = DepthEstimator(mode=mode, color=color.lower())
+        self.estimator = Estimator(mode=mode, color=color.lower())
         logger.info(
             f"Starting up depth scanner, running {mode} mode and using {color} mapping"
         )

@@ -11,7 +11,7 @@ from .errors import TorchcamInputError
 logger = logging.getLogger(__name__)
 
 
-class DepthEstimator:
+class Estimator:
     """Depth estimator main class.
 
     Uses PyTorch's Midas model for generating estimated depth maps.
@@ -21,7 +21,7 @@ class DepthEstimator:
         self, mode: Optional[str] = "standard", color: Optional[str] = "hot"
     ) -> None:
         """#-
-        Initialize the DepthEstimator class. This class uses PyTorch's Midas model to generate#+
+        Initialize the Estimator class. This class uses PyTorch's Midas model to generate#+
         estimated depth maps.#+
 
         Args:

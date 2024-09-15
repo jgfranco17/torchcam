@@ -2,7 +2,7 @@ import pytest
 
 from torchcam.camera.constants import DepthMapColors, MidasTorch
 from torchcam.camera.errors import TorchcamInputError
-from torchcam.camera.estimator import DepthEstimator
+from torchcam.camera.estimator import Estimator
 
 from .conftest import MockPytorchModel
 
@@ -10,7 +10,7 @@ from .conftest import MockPytorchModel
 def test_depth_estimator_init_default(mock_torch_model: MockPytorchModel):
     mode = "standard"
     color = "hot"
-    depth_estimator = DepthEstimator(mode, color)
+    depth_estimator = Estimator(mode, color)
 
     assert depth_estimator.live_render is False
     assert depth_estimator.map_color == DepthMapColors.COLOR_SCHEMES.get("hot")
@@ -24,7 +24,7 @@ def test_depth_estimator_invalid_color_map():
     Test that an error is raised when an invalid colormap is provided.
     """
     with pytest.raises(TorchcamInputError):
-        _ = DepthEstimator(color="invalid_color")
+        _ = Estimator(color="invalid_color")
 
 
 def test_depth_estimator_invalid_scan_mode():
@@ -32,4 +32,4 @@ def test_depth_estimator_invalid_scan_mode():
     Test that an error is raised when an invalid scan mode is provided.
     """
     with pytest.raises(TorchcamInputError):
-        _ = DepthEstimator(mode="invalid_mode")
+        _ = Estimator(mode="invalid_mode")

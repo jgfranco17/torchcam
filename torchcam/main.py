@@ -4,6 +4,7 @@ import click
 import colorama
 
 from . import __version__
+from .get import get_group
 from .handler import TorchcamCliHandler
 from .output import ColorHandler
 from .run import run_group
@@ -47,3 +48,4 @@ def cli(context: click.Context, verbose: int):
 
 
 cli.add_command(run_group)
+cli.add_command(get_group)
