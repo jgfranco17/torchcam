@@ -8,9 +8,10 @@ from .errors import TorchcamInputError
 
 @dataclass(frozen=True)
 class KeyboardKeys:
-    ESC: Final[int] = 20
+    ESC: Final[int] = 27
     SPACE: Final[int] = 32
     LETTER_Q: Final[int] = ord("q")
+    LETTER_C: Final[int] = ord("c")
 
 
 class DepthMapColors:
