@@ -129,9 +129,9 @@ when available.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-![OpenCV](https://img.shields.io/badge/PyTorch-1.13.0-orange?style=for-the-badge&logo=pytorch&logoColor=orange)
-![OpenCV](https://img.shields.io/badge/OpenCV-4.6.0-orange?style=for-the-badge&logo=opencv&logoColor=orange)
-![NumPy](https://img.shields.io/badge/numpy-1.23.4-orange?style=for-the-badge&logo=numpy&logoColor=orange)
+![OpenCV](https://img.shields.io/badge/PyTorch-2.4.1-orange?style=for-the-badge&logo=pytorch&logoColor=orange)
+![OpenCV](https://img.shields.io/badge/OpenCV-4.10.0.84-orange?style=for-the-badge&logo=opencv&logoColor=orange)
+![NumPy](https://img.shields.io/badge/numpy-2.1.1-orange?style=for-the-badge&logo=numpy&logoColor=orange)
 
 ## ✍️ Authors <a name = "authors"></a>
 
