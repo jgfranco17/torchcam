@@ -1,4 +1,5 @@
 import datetime as dt
+import logging
 from time import perf_counter
 from typing import Optional
 
@@ -6,6 +7,9 @@ import cv2
 import numpy as np
 
 from .base import DepthEstimator
+from .errors import TorchcamRuntimeError
+
+logger = logging.getLogger(__name__)
 
 
 class DepthCamera:
@@ -38,7 +42,7 @@ class DepthCamera:
         self.is_running = False
         self.__scale = scale
         self.estimator = DepthEstimator(mode=mode, color=color.lower())
-        print(
+        logger.info(
             f"Starting up depth scanner, running {mode} mode and using {color} mapping."
         )
 
@@ -98,11 +102,7 @@ class DepthCamera:
         Run the video camera.
         """
         self.is_running = True
-        date_today = dt.datetime.now().strftime("%d %B %Y")
-        timestamp = dt.datetime.now().strftime("%H:%M:%S")
-        print(
-            f"[{date_today} | {timestamp}] Running monocular depth scan on {self.estimator.device.upper()}."
-        )
+        logger.info(f"Running monocular depth scan on {self.estimator.device.upper()}")
 
         try:
             while self.is_running:
@@ -141,7 +141,7 @@ class DepthCamera:
                     break
 
         except Exception as e:
-            print(f"Error during camera streaming: {e}")
+            raise TorchcamRuntimeError(f"Error during camera streaming: {e}") from e
 
         finally:
             self.camera.release()
