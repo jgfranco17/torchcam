@@ -39,6 +39,17 @@ class MockLogger:
         return self.logger, self.handler
 
 
+class MockPytorchModel(MagicMock):
+    def __init__(self) -> None:
+        pass
+
+    def to(self, device: str):
+        assert device in ("cpu", "cuda")
+
+    def eval(self) -> None:
+        pass
+
+
 @pytest.fixture
 def runner() -> TestRunner:
     return TestRunner()
@@ -50,6 +61,13 @@ def logger() -> MockLogger:
 
 
 @pytest.fixture
-def mock_datetime() -> Generator[MagicMock, None, None]:
-    with patch("torchcam.models.dt.datetime") as mock_datetime:
-        yield mock_datetime
+def mock_torch_model() -> Generator[MockPytorchModel, None, None]:
+    with patch("torchcam.camera.estimator.torch.hub.load"):
+        mock_model = MockPytorchModel()
+        yield mock_model
+
+
+@pytest.fixture
+def mock_torch_device_cuda() -> Generator[MagicMock, None, None]:
+    with patch("torchcam.camera.estimator.torch.cuda") as mock_cuda:
+        yield mock_cuda

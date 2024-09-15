@@ -1,3 +1,4 @@
+import logging
 from typing import Any, Optional, Tuple
 
 import cv2
@@ -6,6 +7,8 @@ import torch
 
 from .constants import DepthMapColors, MidasTorch
 from .errors import TorchcamInputError
+
+logger = logging.getLogger(__name__)
 
 
 class DepthEstimator:
@@ -44,6 +47,7 @@ class DepthEstimator:
         self.model = torch.hub.load(MidasTorch.MIDAS_SOURCE, self.model_type)
         self.__device = self.__set_device()
         self.model.to(self.__device)
+        logger.debug(f"Using {self.device} for estimation")
         self.model.eval()
 
     @staticmethod
