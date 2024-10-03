@@ -50,23 +50,6 @@ class DepthCamera:
     def __repr__(self) -> str:
         return f"<DepthCamera | camera={self.camera_num}, device={str(self.estimator.device).upper()}>"
 
-    @property
-    def scale(self) -> float:
-        """
-        Returns the scale factor of the window display.
-        """
-        return self.__scale
-
-    @scale.setter
-    def set_scale(self, new_scale_factor: float) -> None:
-        """
-        Set the scale factor of the window display.
-
-        Args:
-            new_scale_factor (float): New scale factor
-        """
-        self.__scale = new_scale_factor
-
     @staticmethod
     def __resize(image: np.ndarray, factor: float) -> np.ndarray:
         """
