@@ -22,5 +22,5 @@ pytest *ARGS:
 
 # Run test coverage
 coverage:
-    poetry run coverage run --source=torchcam --omit="*/__*.py,*/test_*.py" -m pytest
+    poetry run coverage run --source=torchcam --omit="*/__*.py,*/test_*.py,*/main.py" -m pytest
     poetry run coverage report -m

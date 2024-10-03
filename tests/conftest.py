@@ -3,6 +3,7 @@ from copy import deepcopy
 from typing import Generator, List, Tuple
 from unittest.mock import MagicMock, patch
 
+import numpy as np
 import pytest
 from click.testing import CliRunner, Result
 
@@ -50,6 +51,14 @@ class MockPytorchModel(MagicMock):
         pass
 
 
+class MockCamera(MagicMock):
+    def __init__(self) -> None:
+        pass
+
+    def read(self):
+        return 0, np.zeros((1920, 1080))
+
+
 @pytest.fixture
 def runner() -> TestRunner:
     return TestRunner()
@@ -71,3 +80,10 @@ def mock_torch_model() -> Generator[MockPytorchModel, None, None]:
 def mock_torch_device_cuda() -> Generator[MagicMock, None, None]:
     with patch("torchcam.camera.estimator.torch.cuda") as mock_cuda:
         yield mock_cuda
+
+
+@pytest.fixture
+def mock_opencv_video_capture() -> Generator[MagicMock, None, None]:
+    with patch("torchcam.camera.depth_camera.cv2.VideoCapture"):
+        cam = MockCamera()
+        yield cam

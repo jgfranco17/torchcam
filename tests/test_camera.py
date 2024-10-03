@@ -18,3 +18,4 @@ def test_camera_init_default(
 
     assert webcam_runner.camera_num == 0
     assert webcam_runner.is_running is False
+    assert "camera=0" in repr(webcam_runner)
