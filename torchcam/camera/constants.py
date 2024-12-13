@@ -27,6 +27,10 @@ class DepthMapColors:
     }
     DEFAULT: Final[int] = cv2.COLORMAP_INFERNO
 
+    @classmethod
+    def get_color(cls, key: str) -> int:
+        return cls.COLOR_SCHEMES.get(key, cls.DEFAULT)
+
 
 @dataclass(frozen=True)
 class MidasTorch:

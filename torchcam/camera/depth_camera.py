@@ -50,6 +50,10 @@ class DepthCamera:
     def __repr__(self) -> str:
         return f"<DepthCamera | camera={self.camera_num}, device={str(self.estimator.device).upper()}>"
 
+    @property
+    def scale(self) -> float:
+        return self.__scale
+
     @staticmethod
     def __resize(image: np.ndarray, factor: float) -> np.ndarray:
         """

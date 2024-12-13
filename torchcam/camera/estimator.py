@@ -82,9 +82,10 @@ class Estimator:
     @staticmethod
     def __get_colormap(color: str) -> int:
         if color.lower() not in DepthMapColors.COLOR_SCHEMES.keys():
+            available_options = ", ".join(DepthMapColors.COLOR_SCHEMES.keys())
             raise TorchcamInputError(
                 f"Invalid colormap color '{color}' provided",
-                help_text=f"Must be one of the following: {DepthMapColors.COLOR_SCHEMES.keys()}",
+                help_text=f"Must be one of the following: {available_options}",
             )
         return DepthMapColors.COLOR_SCHEMES.get(color, DepthMapColors.DEFAULT)
 
